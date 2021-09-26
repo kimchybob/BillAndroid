@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Unimelb Orientation</string>
+    <string name="account">account/username</string>
+    <string name="password">password</string>
+    <string name="check_password">remember me</string>
+    <string name="check_login">keep login status</string>
+    <string name="login">login</string>
+    <string name="loading">loading</string>
+</resources>
