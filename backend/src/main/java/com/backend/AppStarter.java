@@ -3,16 +3,18 @@ package com.backend;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
  * 主程序类
  */
-@SpringBootApplication
 //=
 //@SpringBootConfiguration+
 //@EnableAutoConfiguration+
-//ComponentScan("com.sblearning")
-@MapperScan(basePackages = "com.sblearning")
+//ComponentScan("com.backend")
+@SpringBootApplication
+
+@MapperScan(basePackages = "com.backend")
 public class AppStarter {
     public static void main(String[] args) {
 

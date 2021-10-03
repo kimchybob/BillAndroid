@@ -1,7 +1,7 @@
 package com.backend.Controller;
 
-import com.sblearning.Domain.DemoFile;
-import com.sblearning.Service.TestService;
+import com.backend.Domain.DemoFile;
+import com.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -24,10 +24,10 @@ public class HelloController {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
-//    @RequestMapping("/test")
-//    public String test(){
-//        return "Gotcha!";
-//    }
+    @RequestMapping("/hello")
+    public String test(){
+        return "Gotcha!";
+    }
 
     @ResponseBody//返回json数据
     @GetMapping("/file")

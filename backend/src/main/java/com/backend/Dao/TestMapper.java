@@ -1,6 +1,6 @@
 package com.backend.Dao;
 
-import com.sblearning.Domain.DemoFile;
+import com.backend.Domain.DemoFile;
 
 
 public interface TestMapper {

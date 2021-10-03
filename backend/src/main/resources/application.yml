@@ -1,0 +1,23 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: jdbc:mysql://172.17.200.79:3306
+    username: root
+    password: 1111
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: 172.17.200.79
+    password: 11111
+    port: 6379
+  # 静态映射/**。
+  # 请求进来，先去找Controller看能不能处理。不能处理的所有请求又都交给静态资源处理器。静态资源也找不到则响应404页面
+#  mvc:
+#    static-path-pattern: /**
+
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mappers/*.xml
+
