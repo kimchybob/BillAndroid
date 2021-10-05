@@ -1,6 +1,7 @@
 package com.example.unimelborientation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -209,8 +210,8 @@ public class LoginActivity extends Activity
                     showToast("success");
                     loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
 
-//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                    finish();//关闭页面
+                    startActivity(new Intent(LoginActivity.this, SearchActivity.class));
+                    finish();//关闭页面
                 } else {
                     showToast("invalid account name or password");
                 }
