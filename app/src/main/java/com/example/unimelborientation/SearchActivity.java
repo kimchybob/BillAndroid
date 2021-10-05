@@ -34,6 +34,9 @@ public class SearchActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(recyclerAdapter);
 
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         //faked data for test
         for(int i=0; i<30; i++){
             subjectsList.add(new RowSubject(
