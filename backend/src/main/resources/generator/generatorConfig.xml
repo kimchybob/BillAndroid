@@ -51,7 +51,7 @@
         </table>
 
         <!-- 生成user时遇到了BUG,改了本地数据库表名才成功生成 -->
-        <table tableName="myuser" domainObjectName="User"
+        <table tableName="user" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
