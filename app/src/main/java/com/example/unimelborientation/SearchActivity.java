@@ -31,6 +31,17 @@ public class SearchActivity extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.recyclerView);
+        //faked data for test
+        for(int i=0; i<30; i++){
+            subjectsList.add(new RowSubject(
+                            "Subject" + i,
+                            "Comp9000" + i,
+                            0,
+                            0,
+                            0
+                    )
+            );
+        }
         recyclerAdapter = new RecyclerAdapter(subjectsList);
 
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,17 +51,6 @@ public class SearchActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        //faked data for test
-        for(int i=0; i<30; i++){
-            subjectsList.add(new RowSubject(
-                    "Subject" + i,
-                    "Comp9000" + i,
-                    0,
-                    0,
-                    0
-                    )
-            );
-        }
         //Todo get real data from our database???
 
     }
@@ -68,6 +68,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                recyclerAdapter.getFilter().filter(newText);
                 return false;
             }
         });
