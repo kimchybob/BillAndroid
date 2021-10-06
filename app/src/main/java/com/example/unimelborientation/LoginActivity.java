@@ -209,8 +209,8 @@ public class LoginActivity extends Activity
                 if (getAccount().equals("admin") && getPassword().equals("123")) {
                     showToast("success");
                     loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
-
-                    startActivity(new Intent(LoginActivity.this, SearchActivity.class));
+//TODo jump main?
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();//关闭页面
                 } else {
                     showToast("invalid account name or password");
