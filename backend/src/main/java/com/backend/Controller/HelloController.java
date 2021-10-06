@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 @RestController//=@ResponseBody + @Controller
+@RequestMapping
 public class HelloController {
 
 //    @Autowired
@@ -24,9 +25,15 @@ public class HelloController {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
+
     @RequestMapping("/hello")
     public String test(){
         return "Gotcha!";
+    }
+
+    @RequestMapping("/cantaccess")
+    public String cantaccess(){
+        return "???!";
     }
 
     @ResponseBody//返回json数据

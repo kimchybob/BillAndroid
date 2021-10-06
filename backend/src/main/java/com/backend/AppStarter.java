@@ -3,7 +3,6 @@ package com.backend;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
  * 主程序类
@@ -20,4 +19,6 @@ public class AppStarter {
 
         SpringApplication.run(AppStarter.class, args);
     }
+
+
 }

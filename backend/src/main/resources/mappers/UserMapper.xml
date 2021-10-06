@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.Dao.TestMapper">
-    <select id="findUserByUsername" resultType="com.backend.Domain.User">
-        select * from user where username=#{username}
+    <select id="findById" resultType="com.backend.Domain.DemoFile">
+        select * from file where id=#{id}
     </select>
 </mapper>
