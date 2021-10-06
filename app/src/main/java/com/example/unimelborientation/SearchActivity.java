@@ -2,8 +2,12 @@ package com.example.unimelborientation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -11,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.unimelborientation.type.RowSubject;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +24,6 @@ public class SearchActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
-
     List<RowSubject> subjectsList;
 
     @Override
@@ -27,9 +31,17 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+//      BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        assert navHostFragment != null;
+        NavController navController = navHostFragment.getNavController();
+        AppBarConfiguration configuration = new AppBarConfiguration.Builder(bottomNavigationView.getMenu()).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, configuration);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+
         subjectsList = new ArrayList<>();
-
-
         recyclerView = findViewById(R.id.recyclerView);
         //faked data for test
         for(int i=0; i<30; i++){
