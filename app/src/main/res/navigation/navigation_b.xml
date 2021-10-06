@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_b"
+    app:startDestination="@id/mapFragment">
+
+    <fragment
+        android:id="@+id/subjectFragment"
+        android:name="com.example.unimelborientation.SubjectFragment"
+        android:label="Subjects"
+        tools:layout="@layout/subject_fragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.unimelborientation.MapFragment"
+        android:label="UniMap"
+        tools:layout="@layout/map_fragment" />
+    <fragment
+        android:id="@+id/myHomeFragment"
+        android:name="com.example.unimelborientation.MyHomeFragment"
+        android:label="Me"
+        tools:layout="@layout/my_home_fragment" />
+</navigation>
