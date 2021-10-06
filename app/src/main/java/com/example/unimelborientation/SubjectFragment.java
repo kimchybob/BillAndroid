@@ -1,5 +1,6 @@
 package com.example.unimelborientation;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -78,6 +82,34 @@ public class SubjectFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(SubjectViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 }
