@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,13 +27,13 @@ public class SubjectFragment extends Fragment {
     private SubjectViewModel myViewModel;
     RecyclerAdapter recyclerAdapter;
     private final List<RowSubject> subjectsList = new ArrayList<>();
-    SubjectFragmentBinding binding;
-
+    private SubjectFragmentBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.subject_fragment, container, false);
+        binding = SubjectFragmentBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
         initData();
         initRecyclerView();
         return view;
@@ -57,6 +56,7 @@ public class SubjectFragment extends Fragment {
     }
 
     private void initRecyclerView(){
+
         recyclerAdapter = new RecyclerAdapter(subjectsList);
         binding.recyclerView.setAdapter(recyclerAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
