@@ -6,4 +6,8 @@
     <string name="check_login">keep login status</string>
     <string name="login">login</string>
     <string name="loading">loading</string>
+    <string name="searchTextHint">Search Subject Code or Name</string>
+    <string name="search">Search</string>
+    <string name="filter">filter</string>
+    <string name="switchAI">SwitchAI</string>
 </resources>

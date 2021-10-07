@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="searchTextHint">Search Subject Code or Name</string>
+    <string name="search">Search</string>
+    <string name="filter">filter</string>
+    <string name="switchAI">SwitchAI</string>
+</resources>
