@@ -5,14 +5,14 @@
     <item
         android:id="@+id/subjectFragment"
         android:icon="@drawable/ic_baseline_school"
-        android:title="Subjects" />
+        android:title="@string/Subjects" />
     <item
         android:id="@+id/mapFragment"
         android:icon="@drawable/ic_baseline_my_location"
-        android:title="UniMap" />
+        android:title="@string/UniMap" />
     <item
         android:id="@+id/myHomeFragment"
         android:icon="@drawable/ic_baseline_emoji_people"
-        android:title="Me" />
+        android:title="@string/Me" />
 
 </menu>

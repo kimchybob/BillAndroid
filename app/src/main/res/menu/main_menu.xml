@@ -8,10 +8,13 @@
             android:icon="@drawable/ic_baseline_search_24"
             android:title="@string/search"
             app:actionViewClass="androidx.appcompat.widget.SearchView"
-            app:showAsAction="always|collapseActionView" />
+            app:showAsAction="always|collapseActionView"
+            />
         <item
             android:icon="@drawable/ic_baseline_filter_list_24"
+            android:id="@+id/filter"
             android:title="@string/filter"
+            app:actionViewClass="android.widget.ListView"
             app:showAsAction="ifRoom|collapseActionView" />
     </group>
 

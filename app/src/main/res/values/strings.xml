@@ -10,4 +10,7 @@
     <string name="search">Search</string>
     <string name="filter">filter</string>
     <string name="switchAI">SwitchAI</string>
+    <string name="Subjects">Subjects</string>
+    <string name="UniMap">UniMap</string>
+    <string name="Me">Me</string>
 </resources>
