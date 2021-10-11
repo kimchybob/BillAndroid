@@ -114,7 +114,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     "Loading: "+ subjectsList.get(getAdapterPosition()).getRowLargeText(),
                     Toast.LENGTH_SHORT).show();
             Context context = view.getContext();
-            Intent intent = new Intent(context, MainActivity.class); //Todo jump to @'s activity
+            Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
             context.startActivity(intent);
         }
     }
