@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
-    List<RowSubject> subjectsList;
+    List<RowSubject> curSubjectsList;
     List<RowSubject> subjectsListAll;
 
-    public RecyclerAdapter(List<RowSubject> subjectsList) {
-        this.subjectsList = subjectsList;
-        System.out.println(subjectsList);
-        this.subjectsListAll = new ArrayList<>(subjectsList);
+    public RecyclerAdapter(List<RowSubject> curSubjectsList) {
+        this.curSubjectsList = curSubjectsList;
+        System.out.println(curSubjectsList);
+        this.subjectsListAll = new ArrayList<>(curSubjectsList);
         System.out.println(subjectsListAll);
     }
 
@@ -41,15 +41,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.rowSmallTextView.setText(subjectsList.get(position).getRowSmallText());
-        holder.rowLargeTextView.setText(subjectsList.get(position).getRowLargeText());
+        holder.rowSmallTextView.setText(curSubjectsList.get(position).getRowSmallText());
+        holder.rowLargeTextView.setText(curSubjectsList.get(position).getRowLargeText());
         //Todo set subject score???
         //Todo set subject title???
     }
 
     @Override
     public int getItemCount() {
-        return subjectsList.size();
+        return curSubjectsList.size();
     }
 
     @Override
@@ -87,9 +87,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            subjectsList.clear();
+            curSubjectsList.clear();
             List<RowSubject> filterList= (List<RowSubject>) filterResults.values;
-            subjectsList.addAll(filterList);
+            curSubjectsList.addAll(filterList);
             notifyDataSetChanged();
         }
     };
@@ -111,10 +111,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @Override
         public void onClick(View view) {
             Toast.makeText(view.getContext(),
-                    "Loading: "+ subjectsList.get(getAdapterPosition()).getRowLargeText(),
+                    "Loading: "+ curSubjectsList.get(getAdapterPosition()).getRowLargeText(),
                     Toast.LENGTH_SHORT).show();
             Context context = view.getContext();
+            int sid = curSubjectsList.get(getAdapterPosition()).getSid();
             Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
+            intent.putExtra("sid", sid);
             context.startActivity(intent);
         }
     }

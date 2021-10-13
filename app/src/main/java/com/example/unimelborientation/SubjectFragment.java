@@ -101,7 +101,11 @@ public class SubjectFragment extends Fragment {
                 popMenu.dismiss();
                 if (menuIndex == 0) {
                     currentCourse = courseWindowData.get(pos).get("name");
+//                    binding.progress.setVisibility(View.VISIBLE);
+//                    get_by_coursename
+
                     Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
+
                     //TODO update course subject filter
                 } else if (menuIndex == 1) {
                     currentSort = sortWindowData.get(pos).get("name");
@@ -199,12 +203,12 @@ public class SubjectFragment extends Fragment {
     private void initSubjectsData(){
         for(int i=0; i<100; i++){
             subjectsList.add(new RowSubject(
-                            "Subject" + i,
-                            "Comp9000" + i,
-                            0,
-                            0,
-                            0
-                    )
+                    "Subject" + i,
+                    "Comp9000" + i,
+                    0,
+                    0,
+                    0,
+                    i)
             );
         }
         //Todo get real data from our database???

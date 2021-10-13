@@ -18,9 +18,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center_vertical"
-            android:text="地点"
+            android:text="@string/textview"
             android:textColor="#5a5959"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <View

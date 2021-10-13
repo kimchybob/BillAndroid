@@ -8,7 +8,11 @@ public class RowSubject {
     float theoryDegree;
     float practiceDegree;
     float difficultyDegree;
-    long sid;
+    int sid;
+
+    public int getSid() {
+        return sid;
+    }
 
     public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree) {
         this.subjectName = subjectName;
@@ -18,7 +22,7 @@ public class RowSubject {
         this.difficultyDegree = difficultyDegree;
     }
 
-    public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree, long sid) {
+    public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree, int sid){
         this.subjectName = subjectName;
         this.subjectCode = subjectCode;
         this.theoryDegree = theoryDegree;
