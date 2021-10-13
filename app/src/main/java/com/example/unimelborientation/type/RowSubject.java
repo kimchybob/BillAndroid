@@ -2,11 +2,13 @@ package com.example.unimelborientation.type;
 
 public class RowSubject {
 //    TODO name命名待讨论
+
     String subjectName;
     String subjectCode;
     float theoryDegree;
     float practiceDegree;
     float difficultyDegree;
+    long sid;
 
     public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree) {
         this.subjectName = subjectName;
@@ -14,6 +16,15 @@ public class RowSubject {
         this.theoryDegree = theoryDegree;
         this.practiceDegree = practiceDegree;
         this.difficultyDegree = difficultyDegree;
+    }
+
+    public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree, long sid) {
+        this.subjectName = subjectName;
+        this.subjectCode = subjectCode;
+        this.theoryDegree = theoryDegree;
+        this.practiceDegree = practiceDegree;
+        this.difficultyDegree = difficultyDegree;
+        this.sid = sid;
     }
 
     public String getSubjectName() {

@@ -163,6 +163,7 @@ public class SubjectFragment extends Fragment {
 
     private void initFuncBarView() {
 //        binding.supplierListLv;
+        binding.progress.setVisibility(View.GONE);
         binding.supplierListCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,7 +177,7 @@ public class SubjectFragment extends Fragment {
         binding.supplierListSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.supplierListCourseTv.setTextColor(Color.parseColor("#39ac69"));
+                binding.supplierListSortTv.setTextColor(Color.parseColor("#39ac69"));
                 popListView.setAdapter(sortMenuAdapter);
                 popMenu.showAsDropDown(binding.supplierListSort,0,2);
                 menuIndex = 1;
@@ -186,7 +187,7 @@ public class SubjectFragment extends Fragment {
         binding.supplierListTrend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.supplierListCourseTv.setTextColor(Color.parseColor("#39ac69"));
+                binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
                 popListView.setAdapter(trendMenuAdapter);
                 popMenu.showAsDropDown(binding.supplierListTrend,0,2);
                 menuIndex = 2;
