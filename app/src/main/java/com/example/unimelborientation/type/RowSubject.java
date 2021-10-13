@@ -1,5 +1,7 @@
 package com.example.unimelborientation.type;
 
+import java.math.BigDecimal;
+
 public class RowSubject {
 //    TODO name命名待讨论
 
@@ -30,6 +32,11 @@ public class RowSubject {
         this.difficultyDegree = difficultyDegree;
         this.sid = sid;
     }
+    private float beautifyFloat(float f){
+        BigDecimal b=new BigDecimal(f);
+        float res = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
+        return res;
+    }
 
     public String getSubjectName() {
         return subjectName;
@@ -48,7 +55,7 @@ public class RowSubject {
     }
 
     public float getTheoryDegree() {
-        return theoryDegree;
+        return beautifyFloat(theoryDegree);
     }
 
     public void setTheoryDegree(float theoryDegree) {
@@ -56,7 +63,7 @@ public class RowSubject {
     }
 
     public float getPracticeDegree() {
-        return practiceDegree;
+        return beautifyFloat(practiceDegree);
     }
 
     public void setPracticeDegree(float practiceDegree) {
@@ -64,7 +71,7 @@ public class RowSubject {
     }
 
     public float getDifficultyDegree() {
-        return difficultyDegree;
+        return beautifyFloat(difficultyDegree);
     }
 
     public void setDifficultyDegree(float difficultyDegree) {

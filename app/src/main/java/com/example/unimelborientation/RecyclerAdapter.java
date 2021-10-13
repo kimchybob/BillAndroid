@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.unimelborientation.type.RowSubject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
@@ -76,6 +78,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         filteredList.add(subject);
                     }
                 }
+                if (filteredList.size() == 0){
+                    //todo api search 
+                }
             }
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
@@ -93,6 +98,111 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             notifyDataSetChanged();
         }
     };
+
+    public void syncCurrentSubjects(ArrayList<RowSubject> subjectsList){
+        curSubjectsList = subjectsList;
+        subjectsListAll = curSubjectsList;
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void sort(String method){
+        if (method.equals("Practice Score Ascending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    float res = o1.getPracticeDegree() - o2.getPracticeDegree();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? 1: -1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Practice Score Descending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    float res = o1.getPracticeDegree() - o2.getPracticeDegree();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? -1: 1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Theory Score Ascending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    float res = o1.getTheoryDegree() - o2.getTheoryDegree();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? 1: -1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Theory Score Descending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    float res = o1.getTheoryDegree() - o2.getTheoryDegree();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? -1: 1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Difficulty Score Ascending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    float res = o1.getDifficultyDegree() - o2.getDifficultyDegree();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? 1: -1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Difficulty Score Descending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    float res = o1.getDifficultyDegree() - o2.getDifficultyDegree();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? -1: 1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Subject Name Alphabet Ascending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    return o1.getSubjectName().compareTo(o2.getSubjectName());
+                }
+            });
+        }
+        if (method.equals("Subject Name Alphabet Descending")){
+            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+                @Override
+                public int compare(RowSubject o1, RowSubject o2) {
+                    return -(o1.getSubjectName().compareTo(o2.getSubjectName()));
+                }
+            });
+        }
+        notifyDataSetChanged();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView rowImageView;
