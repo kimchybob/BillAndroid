@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class SubjectFragment extends Fragment {
 
@@ -100,17 +101,20 @@ public class SubjectFragment extends Fragment {
                                     long arg3) {
                 popMenu.dismiss();
                 if (menuIndex == 0) {
+                    if (currentCourse.equals(courseWindowData.get(pos).get("name"))){
+                        return;
+                    }
                     currentCourse = courseWindowData.get(pos).get("name");
 //                    binding.progress.setVisibility(View.VISIBLE);
-//                    get_by_coursename
-
+//                    data = get_by_coursename(currentCourse)；
+//                    recyclerAdapter.syncCurrentSubjects(data);
                     Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
-
+//                    binding.progress.setVisibility(View.Gone);
                     //TODO update course subject filter
                 } else if (menuIndex == 1) {
                     currentSort = sortWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentSort, Toast.LENGTH_SHORT).show();
-                    //Todo sort
+                    recyclerAdapter.sort(currentSort);
                 } else {
                     currentTrend = trendWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentTrend, Toast.LENGTH_SHORT).show();
@@ -138,7 +142,10 @@ public class SubjectFragment extends Fragment {
         }
 
         sortWindowData = new ArrayList<Map<String,String>>();
-        String[] menuStr2 = new String[] { "Practice Score Ascending" ,
+        String[] menuStr2 = new String[] {
+                "Subject Name Alphabet Ascending",
+                "Subject Name Alphabet Descending",
+                "Practice Score Ascending" ,
                 "Practice Score Descending",
                 "Theory Score Ascending",
                 "Theory Score Descending",
@@ -201,13 +208,15 @@ public class SubjectFragment extends Fragment {
 
     //faked data for test
     private void initSubjectsData(){
+        Random rand = new Random();
         for(int i=0; i<100; i++){
+
             subjectsList.add(new RowSubject(
                     "Subject" + i,
                     "Comp9000" + i,
-                    0,
-                    0,
-                    0,
+                    rand.nextFloat() + rand.nextInt(5),
+                    rand.nextFloat() + rand.nextInt(5),
+                    rand.nextFloat()+rand.nextInt(5),
                     i)
             );
         }
