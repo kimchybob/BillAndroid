@@ -32,10 +32,10 @@ public class UserDetailsService {
             throw new RuntimeException("用户不存在");
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role:userMapper.findRoleByUsername(username))
-        {
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName()));
-        }
+//        for (Role role:userMapper.findRoleByUsername(username))
+//        {
+//            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName()));
+//        }
         return new org.springframework.security.core.userdetails.User(user.getUsername(),"{noop}"+user.getPassword(),authorities);
     }
 }
