@@ -45,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 放行OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 其余资源都需要登录
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 // 添加JWT登录拦截器
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
