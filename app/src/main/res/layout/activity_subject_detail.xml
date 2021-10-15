@@ -7,11 +7,11 @@
     tools:context=".subjectDetail">
 
     <TextView
-        android:id="@+id/Mobile_computing"
+        android:id="@+id/subject_title"
         android:layout_width="319dp"
         android:layout_height="40dp"
         android:gravity="center|left"
-        android:text="Mobile Computing"
+        android:text="Mobile computing"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,75 +21,90 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
+
+    <TextView
+        android:id="@+id/subject_code"
+        android:layout_width="319dp"
+        android:layout_height="40dp"
+        android:gravity="center|left"
+        android:text="COMP90018"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063" />
+
     <TextView
         android:id="@+id/Pre_class"
-        android:layout_width="286dp"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:gravity="center|left"
         android:text="Pre Subject: AI Planning"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.093" />
-
+        app:layout_constraintVertical_bias="0.14" />
 
     <TextView
-        android:id="@+id/Rate1"
-        android:layout_width="129dp"
+        android:id="@+id/rateTheory"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:gravity="center|left"
-        android:text="Rate 1: 4.0"
+        android:text="Theory rate: "
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.188" />
 
     <TextView
-        android:id="@+id/Rate2"
-        android:layout_width="129dp"
+        android:id="@+id/ratePractice"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:gravity="center|left"
-        android:text="Rate 2: 4.2"
+        android:text="Practice rate: "
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.193" />
+        app:layout_constraintVertical_bias="0.238" />
 
     <TextView
-        android:id="@+id/Rate3"
-        android:layout_width="129dp"
+        android:id="@+id/rateDifficulty"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:gravity="center|left"
-        android:text="Rate 3: 4.4"
+        android:text="Difficulty rate: "
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.292" />
 
     <TextView
-        android:layout_width="290dp"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Peer Comment:"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.309" />
+        app:layout_constraintVertical_bias="0.366" />
 
     <ListView
         android:id="@+id/Comment_list"
@@ -100,7 +115,20 @@
         app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.706" />
+        app:layout_constraintVertical_bias="0.824" />
+
+    <Button
+        android:id="@+id/rate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.346" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
