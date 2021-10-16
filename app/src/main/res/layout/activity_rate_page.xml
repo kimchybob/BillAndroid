@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RatePage">
+
+    <TextView
+        android:id="@+id/rate_page_head"
+        android:layout_width="334dp"
+        android:layout_height="wrap_content"
+        android:text="Mobile computing"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.207"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+
+    <TextView
+        android:id="@+id/Theory_rate_id"
+        android:layout_width="78dp"
+        android:layout_height="35dp"
+        android:text="Theory"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.146" />
+
+    <RatingBar
+        android:id="@+id/Theory_rate_bar"
+        android:layout_width="241dp"
+        android:layout_height="51dp"
+        android:max="5"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.126" />
+
+    <TextView
+        android:id="@+id/Practice_rate_id"
+        android:layout_width="78dp"
+        android:layout_height="35dp"
+        android:text="Practice"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.241" />
+
+    <RatingBar
+        android:id="@+id/Practice_rate_bar"
+        android:layout_width="241dp"
+        android:layout_height="51dp"
+        android:max="5"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223" />
+
+    <TextView
+        android:id="@+id/Difficulty_rate_id"
+        android:layout_width="88dp"
+        android:layout_height="35dp"
+        android:text="Difficulity"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.34" />
+
+    <RatingBar
+        android:id="@+id/Difficulty_rate_bar"
+        android:layout_width="241dp"
+        android:layout_height="51dp"
+        android:max="5"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.325" />
+
+    <EditText
+        android:id="@+id/rate_edit_text"
+        android:layout_width="330dp"
+        android:layout_height="143dp"
+        android:background="@drawable/edit_drawable_background"
+        android:gravity="top|left"
+        android:hint="Please type your comments"
+        android:paddingLeft="5dp"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.573" />
+
+    <Button
+        android:id="@+id/rate_submit_button"
+        android:layout_width="150dp"
+        android:layout_height="47dp"
+        android:gravity="center"
+        android:text="submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.767" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

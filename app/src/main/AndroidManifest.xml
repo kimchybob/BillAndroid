@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UnimelbOrientation">
         <activity
+            android:name=".RatePage"
+            android:exported="true" />
+        <activity
             android:name=".subjectDetail"
             android:exported="true" />
         <activity
