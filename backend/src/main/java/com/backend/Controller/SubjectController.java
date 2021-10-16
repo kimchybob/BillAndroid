@@ -1,6 +1,8 @@
 package com.backend.Controller;
 
+import com.backend.Domain.Markrecord;
 import com.backend.Domain.Subject;
+import com.backend.Service.MarkrecordService;
 import com.backend.Service.SubjectService;
 import com.backend.Util.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class SubjectController {
 
     @Autowired
     SubjectService subjectService;
+
+    @Autowired
+    MarkrecordService markrecordService;
 
     @ResponseBody
     @GetMapping("/subject")
@@ -62,6 +67,18 @@ public class SubjectController {
             return AjaxResult.warn("No corresponding subject here.");
         }
         return AjaxResult.success(subject);
+    }
+
+    @PostMapping("/subject/setSubjComment")
+    public AjaxResult setSubjComment(@RequestBody Markrecord record){
+        if(record==null||record.getSubjid()==0)
+            return AjaxResult.error("Input Empty!");
+        int result=markrecordService.setSubjComment(record);
+        if (result != 0)
+            return AjaxResult.success("Successful insert!");
+        else
+            return AjaxResult.error("Insert fail!");
+
     }
 
 
