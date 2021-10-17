@@ -2,7 +2,6 @@ package com.backend.Dao;
 
 import com.backend.Domain.User;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 public interface UserMapper {
     /**
@@ -37,7 +36,7 @@ public interface UserMapper {
      */
     User selectByPrimaryKey(Integer uid);
 
-    @Select("select * from User where username=#{username}")
+    //@Select("select * from User where username=#{username}")
     User findUserByUsername(@Param("username") String username);
 
     /**

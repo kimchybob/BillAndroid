@@ -1,6 +1,7 @@
 package com.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -37,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //放行hello测试
                 .antMatchers("/hello").permitAll()
-                .antMatchers("/login").permitAll()
+                //.antMatchers("/api/login").permitAll()
                 //地址 "/content/**" 开头的请求地址，可以给角色 ADMIN 或者 USER 的用户来使用；
                 //antMatchers("/content/** ").access("hasRole('ADMIN') or hasRole('USER')")
                 // 访问/data需要ADMIN角色
@@ -45,8 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 放行OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 其余资源都需要登录
-                //.anyRequest().authenticated()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
+                //.anyRequest().permitAll()
                 .and()
                 // 添加JWT登录拦截器
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
