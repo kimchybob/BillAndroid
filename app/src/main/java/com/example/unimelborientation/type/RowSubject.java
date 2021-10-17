@@ -1,12 +1,20 @@
 package com.example.unimelborientation.type;
 
+import java.math.BigDecimal;
+
 public class RowSubject {
 //    TODO name命名待讨论
+
     String subjectName;
     String subjectCode;
     float theoryDegree;
     float practiceDegree;
     float difficultyDegree;
+    int sid;
+
+    public int getSid() {
+        return sid;
+    }
 
     public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree) {
         this.subjectName = subjectName;
@@ -14,6 +22,20 @@ public class RowSubject {
         this.theoryDegree = theoryDegree;
         this.practiceDegree = practiceDegree;
         this.difficultyDegree = difficultyDegree;
+    }
+
+    public RowSubject(String subjectName, String subjectCode, float theoryDegree, float practiceDegree, float difficultyDegree, int sid){
+        this.subjectName = subjectName;
+        this.subjectCode = subjectCode;
+        this.theoryDegree = theoryDegree;
+        this.practiceDegree = practiceDegree;
+        this.difficultyDegree = difficultyDegree;
+        this.sid = sid;
+    }
+    private float beautifyFloat(float f){
+        BigDecimal b=new BigDecimal(f);
+        float res = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
+        return res;
     }
 
     public String getSubjectName() {
@@ -33,7 +55,7 @@ public class RowSubject {
     }
 
     public float getTheoryDegree() {
-        return theoryDegree;
+        return beautifyFloat(theoryDegree);
     }
 
     public void setTheoryDegree(float theoryDegree) {
@@ -41,7 +63,7 @@ public class RowSubject {
     }
 
     public float getPracticeDegree() {
-        return practiceDegree;
+        return beautifyFloat(practiceDegree);
     }
 
     public void setPracticeDegree(float practiceDegree) {
@@ -49,7 +71,7 @@ public class RowSubject {
     }
 
     public float getDifficultyDegree() {
-        return difficultyDegree;
+        return beautifyFloat(difficultyDegree);
     }
 
     public void setDifficultyDegree(float difficultyDegree) {

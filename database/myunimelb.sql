@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `map`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `map` (
-  `MID` int(11) NOT NULL,
+  `MID` int(11) NOT NULL AUTO_INCREMENT,
   `buildName` varchar(45) COLLATE utf8_bin NOT NULL,
   `address` varchar(80) COLLATE utf8_bin NOT NULL,
   `lastTime` datetime NOT NULL,
   PRIMARY KEY (`MID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `markrecord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `markrecord` (
-  `RID` int(11) NOT NULL,
+  `RID` int(11) NOT NULL AUTO_INCREMENT,
   `subjID` int(11) NOT NULL,
   `practiScore` float NOT NULL DEFAULT '0',
   `theoryScore` float NOT NULL DEFAULT '0',
@@ -58,7 +58,7 @@ CREATE TABLE `markrecord` (
   `comUID` int(11) NOT NULL,
   `lastTime` datetime NOT NULL,
   PRIMARY KEY (`RID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `subject`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subject` (
-  `SID` int(11) NOT NULL,
+  `SID` int(11) NOT NULL AUTO_INCREMENT,
   `subjName` varchar(45) NOT NULL,
   `subjCode` varchar(45) NOT NULL,
   `descrip` mediumtext,
@@ -90,7 +90,7 @@ CREATE TABLE `subject` (
   `diffiScore` float NOT NULL DEFAULT '0',
   `lastTime` datetime NOT NULL,
   PRIMARY KEY (`SID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,13 +111,13 @@ DROP TABLE IF EXISTS `subjmap`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subjmap` (
-  `SMID` int(11) NOT NULL,
+  `SMID` int(11) NOT NULL AUTO_INCREMENT,
   `subjID` int(11) NOT NULL,
   `addrID` int(11) NOT NULL,
   `type` varchar(45) COLLATE utf8_bin NOT NULL,
   `lastTime` datetime NOT NULL,
   PRIMARY KEY (`SMID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +138,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `UID` int(11) NOT NULL,
+  `UID` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) COLLATE utf8_bin NOT NULL,
   `password` varchar(45) COLLATE utf8_bin NOT NULL,
   `email` varchar(45) COLLATE utf8_bin NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE `user` (
   `course` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `lastTime` datetime NOT NULL,
   PRIMARY KEY (`UID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-05 13:35:01
+-- Dump completed on 2021-10-17  0:16:11
