@@ -10,18 +10,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SubjectFragment">
+        tools:context=".SubjectFragment"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="32dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/item_up"
+            app:layout_constraintTop_toTopOf="@+id/func_bar"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/row_item" />
 
@@ -61,15 +63,12 @@
             app:layout_constraintGuide_percent="0.33" />
 
         <LinearLayout
+            app:layout_constraintBottom_toBottomOf="@id/func_bar_bottom"
             android:id="@+id/func_bar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="#ffffff"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/func_bar_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/func_bar_up"
             android:baselineAligned="false">
 
             <LinearLayout
@@ -141,25 +140,24 @@
                     android:src="@mipmap/icon_arrow_down" />
             </LinearLayout>
         </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginBottom="4dp"
             android:background="#E2E2E2"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/func_bar_bottom" />
 
         <RelativeLayout
+            app:layout_constraintBottom_toBottomOf="@id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="289dp">
 
             <ListView
                 android:id="@+id/supplier_list_lv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:cacheColorHint="@android:color/transparent"
                 android:divider="#f0f0f0"
@@ -178,7 +176,6 @@
                 android:indeterminateDuration="1000" />
         </RelativeLayout>
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
