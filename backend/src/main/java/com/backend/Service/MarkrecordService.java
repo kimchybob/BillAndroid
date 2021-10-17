@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class MarkrecordService {
@@ -18,5 +19,10 @@ public class MarkrecordService {
         LocalDateTime datetime= LocalDateTime.now();
         markrecord.setLasttime(datetime);
         return markrecordMapper.insertSelective(markrecord);}
+
+
+    public List<Markrecord> selectBySubjId(Integer id){
+        return markrecordMapper.selectBySubjId(id);
+    }
 
 }
