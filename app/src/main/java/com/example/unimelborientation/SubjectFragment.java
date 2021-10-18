@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -87,21 +88,21 @@ public class SubjectFragment extends Fragment {
                     }
                 });
         courseMenuAdapter = new SimpleAdapter(getContext(), courseWindowData,
-                R.layout.item_listview_pop_win, new String[] { "name" },
-                new int[] { R.id.listview_popwind_tv });
+                R.layout.item_listview_pop_win, new String[]{"name"},
+                new int[]{R.id.listview_popwind_tv});
         sortMenuAdapter = new SimpleAdapter(getContext(), sortWindowData,
-                R.layout.item_listview_pop_win, new String[] { "name" },
-                new int[] { R.id.listview_popwind_tv });
+                R.layout.item_listview_pop_win, new String[]{"name"},
+                new int[]{R.id.listview_popwind_tv});
         trendMenuAdapter = new SimpleAdapter(getContext(), trendWindowData,
-                R.layout.item_listview_pop_win, new String[] { "name" },
-                new int[] { R.id.listview_popwind_tv });
+                R.layout.item_listview_pop_win, new String[]{"name"},
+                new int[]{R.id.listview_popwind_tv});
 
         popListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
                                     long arg3) {
                 popMenu.dismiss();
                 if (menuIndex == 0) {
-                    if (currentCourse.equals(courseWindowData.get(pos).get("name"))){
+                    if (currentCourse != null && currentCourse.equals(courseWindowData.get(pos).get("name"))) {
                         return;
                     }
                     currentCourse = courseWindowData.get(pos).get("name");
@@ -126,9 +127,9 @@ public class SubjectFragment extends Fragment {
     }
 
     private void initPopWindowData() {
-        courseWindowData = new ArrayList<Map<String,String>>();
+        courseWindowData = new ArrayList<Map<String, String>>();
         //Todo get real date
-        String[] menuStr1 = new String[] { "Master of Information Technology",
+        String[] menuStr1 = new String[]{"Master of Information Technology",
                 "Master of Information System",
                 "Master of Data Science",
                 "Master of Medicine",
@@ -141,11 +142,11 @@ public class SubjectFragment extends Fragment {
             courseWindowData.add(map1);
         }
 
-        sortWindowData = new ArrayList<Map<String,String>>();
-        String[] menuStr2 = new String[] {
+        sortWindowData = new ArrayList<Map<String, String>>();
+        String[] menuStr2 = new String[]{
                 "Subject Name Alphabet Ascending",
                 "Subject Name Alphabet Descending",
-                "Practice Score Ascending" ,
+                "Practice Score Ascending",
                 "Practice Score Descending",
                 "Theory Score Ascending",
                 "Theory Score Descending",
@@ -159,8 +160,8 @@ public class SubjectFragment extends Fragment {
             sortWindowData.add(map2);
         }
 
-        trendWindowData = new ArrayList<Map<String,String>>();
-        String[] menuStr3 = new String[] { "COMP90015",
+        trendWindowData = new ArrayList<Map<String, String>>();
+        String[] menuStr3 = new String[]{"COMP90015",
                 "COMP90020",
                 "COMP90055",
         };
@@ -190,7 +191,7 @@ public class SubjectFragment extends Fragment {
             public void onClick(View view) {
                 binding.supplierListSortTv.setTextColor(Color.parseColor("#39ac69"));
                 popListView.setAdapter(sortMenuAdapter);
-                popMenu.showAsDropDown(binding.supplierListSort,0,2);
+                popMenu.showAsDropDown(binding.supplierListSort, 0, 2);
                 menuIndex = 1;
             }
         });
@@ -200,35 +201,35 @@ public class SubjectFragment extends Fragment {
             public void onClick(View view) {
                 binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
                 popListView.setAdapter(trendMenuAdapter);
-                popMenu.showAsDropDown(binding.supplierListTrend,0,2);
+                popMenu.showAsDropDown(binding.supplierListTrend, 0, 2);
                 menuIndex = 2;
             }
         });
     }
 
     //faked data for test
-    private void initSubjectsData(){
+    private void initSubjectsData() {
         Random rand = new Random();
-        for(int i=0; i<100; i++){
+        for (int i = 0; i < 100; i++) {
 
             subjectsList.add(new RowSubject(
                     "Subject" + i,
                     "Comp9000" + i,
                     rand.nextFloat() + rand.nextInt(5),
                     rand.nextFloat() + rand.nextInt(5),
-                    rand.nextFloat()+rand.nextInt(5),
+                    rand.nextFloat() + rand.nextInt(5),
                     i)
             );
         }
         //Todo get real data from our database???
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         recyclerAdapter = new RecyclerAdapter(subjectsList);
         binding.recyclerView.setAdapter(recyclerAdapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        if (getActivity() != null){
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        if (getActivity() != null) {
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
             binding.recyclerView.addItemDecoration(dividerItemDecoration);
         }
@@ -251,7 +252,7 @@ public class SubjectFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // TODO Add your menu entries here
-        if (getActivity() != null){
+        if (getActivity() != null) {
             getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
         }
         MenuItem item = menu.findItem(R.id.action_search);
