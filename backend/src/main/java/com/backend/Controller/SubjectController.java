@@ -81,5 +81,16 @@ public class SubjectController {
 
     }
 
+    @GetMapping("/subject/getSubjDetail/{sid}")
+    public AjaxResult getSubjDetailBySid(@PathVariable("sid") int sid){
+        if(sid==0)
+            return AjaxResult.error("Input Empty!");
+        List<Subject> subjList=subjectService.selectByUid(sid);
+        if(subjList.isEmpty()){
+            return AjaxResult.warn("No corresponding subject list here.");
+        }
+        return AjaxResult.success(subjList);
+    }
+
 
 }
