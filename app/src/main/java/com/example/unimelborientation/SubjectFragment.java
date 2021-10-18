@@ -27,7 +27,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.unimelborientation.databinding.SubjectFragmentBinding;
-import com.example.unimelborientation.type.RowSubject;
+import com.example.unimelborientation.type.Subject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class SubjectFragment extends Fragment {
 
     private SubjectViewModel myViewModel;
     RecyclerAdapter recyclerAdapter;
-    private final List<RowSubject> subjectsList = new ArrayList<>();
+    private final List<Subject> subjectsList = new ArrayList<>();
     private List<Map<String, String>> courseWindowData, sortWindowData, trendWindowData;
     private SubjectFragmentBinding binding;
     private PopupWindow popMenu;
@@ -212,7 +212,7 @@ public class SubjectFragment extends Fragment {
         Random rand = new Random();
         for (int i = 0; i < 100; i++) {
 
-            subjectsList.add(new RowSubject(
+            subjectsList.add(new Subject(
                     "Subject" + i,
                     "Comp9000" + i,
                     rand.nextFloat() + rand.nextInt(5),
