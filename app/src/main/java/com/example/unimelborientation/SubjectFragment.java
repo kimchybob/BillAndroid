@@ -3,6 +3,8 @@ package com.example.unimelborientation;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -20,20 +22,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unimelborientation.databinding.SubjectFragmentBinding;
 import com.example.unimelborientation.type.Subject;
+import com.example.unimelborientation.util.HttpClient;
+import com.google.gson.Gson;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import cz.msebera.android.httpclient.Header;
 
 public class SubjectFragment extends Fragment {
 
@@ -47,6 +60,7 @@ public class SubjectFragment extends Fragment {
     private SimpleAdapter courseMenuAdapter, sortMenuAdapter, trendMenuAdapter;
     private int menuIndex = 0;
     private String currentCourse, currentSort, currentTrend;
+    private String uid = "1";
 
 
     @Override
@@ -55,7 +69,6 @@ public class SubjectFragment extends Fragment {
         binding = SubjectFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         initSubjectsData();
-        initRecyclerView();
         initPopWindowData();
         initFuncBarView();
         initPopWindowView();
@@ -106,12 +119,27 @@ public class SubjectFragment extends Fragment {
                         return;
                     }
                     currentCourse = courseWindowData.get(pos).get("name");
-//                    binding.progress.setVisibility(View.VISIBLE);
-//                    data = get_by_coursename(currentCourse)；
-//                    recyclerAdapter.syncCurrentSubjects(data);
-                    Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
-//                    binding.progress.setVisibility(View.Gone);
-                    //TODO update course subject filter
+                    binding.progress.setVisibility(View.VISIBLE);
+                    HttpClient.get("subject/getListByCourse/" + currentCourse, null, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                            try {
+                                JSONArray data = (JSONArray) response.get("data");
+                                ArrayList<Subject> list = new ArrayList<>();
+                                for (int index = 0; index < data.length(); index++) {
+                                    list.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class));
+                                }
+                                recyclerAdapter.syncCurrentSubjects(list);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }finally {
+                                Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
+                                binding.progress.setVisibility(View.GONE);
+                            }
+                        }
+                    });
                 } else if (menuIndex == 1) {
                     currentSort = sortWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentSort, Toast.LENGTH_SHORT).show();
@@ -119,7 +147,10 @@ public class SubjectFragment extends Fragment {
                 } else {
                     currentTrend = trendWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentTrend, Toast.LENGTH_SHORT).show();
-                    //todo jump to that subject
+                    Context context = getContext();
+                    Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
+                    intent.putExtra("sid", String.valueOf(1)); //todo name
+                    context.startActivity(intent);
                 }
             }
         });
@@ -129,7 +160,7 @@ public class SubjectFragment extends Fragment {
     private void initPopWindowData() {
         courseWindowData = new ArrayList<Map<String, String>>();
         //Todo get real date
-        String[] menuStr1 = new String[]{"Master of Information Technology",
+        String[] menuStr1 = new String[]{"MIT",
                 "Master of Information System",
                 "Master of Data Science",
                 "Master of Medicine",
@@ -175,7 +206,7 @@ public class SubjectFragment extends Fragment {
 
     private void initFuncBarView() {
 //        binding.supplierListLv;
-        binding.progress.setVisibility(View.GONE);
+//        binding.progress.setVisibility(View.GONE);
         binding.supplierListCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -209,20 +240,40 @@ public class SubjectFragment extends Fragment {
 
     //faked data for test
     private void initSubjectsData() {
-        Random rand = new Random();
-        for (int i = 0; i < 100; i++) {
+        binding.progress.setVisibility(View.VISIBLE);
 
-            subjectsList.add(new Subject(
-                    "Subject" + i,
-                    "Comp9000" + i,
-                    rand.nextFloat() + rand.nextInt(5),
-                    rand.nextFloat() + rand.nextInt(5),
-                    rand.nextFloat() + rand.nextInt(5),
-                    i)
-            );
-        }
-        //Todo get real data from our database???
+        HttpClient.get("subject/getListByUid/" + uid, null, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+                    for (int index = 0; index < data.length(); index++) {
+                        subjectsList.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class));
+                    }
+                    initRecyclerView();
+                    binding.progress.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+//        Random rand = new Random();
+//        for (int i = 0; i < 100; i++) {
+//
+//            subjectsList.add(new Subject(
+//                    "Subject" + i,
+//                    "Comp9000" + i,
+//                    rand.nextFloat() + rand.nextInt(5),
+//                    rand.nextFloat() + rand.nextInt(5),
+//                    rand.nextFloat() + rand.nextInt(5),
+//                    i)
+//            );
     }
+    //Todo get real data from our database???
+
 
     private void initRecyclerView() {
 

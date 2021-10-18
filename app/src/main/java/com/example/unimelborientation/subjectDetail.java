@@ -34,7 +34,7 @@ public class subjectDetail extends AppCompatActivity {
     private String practice_Rate = " 4.2"; // TODO read the input practice rate value
     private String difficulty_Rate = " 4.4"; // TODO read the input difficulty rate value
     private Button rate_button;
-    private String uid;
+    private String sid;
     private Subject subject;
 
     private String [] commentdata = {"This is an interesting class", "The experience of designing our own app is fantastic",
@@ -52,9 +52,9 @@ public class subjectDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //test
-        uid = getIntent().getStringExtra("uid");
+        sid = getIntent().getStringExtra("sid");
 
-        HttpClient.get("subject/getListByUid/" + uid, null, new JsonHttpResponseHandler(){
+        HttpClient.get("subject/getListByUid/" + sid, null, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray

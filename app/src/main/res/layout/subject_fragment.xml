@@ -150,9 +150,10 @@
             app:layout_constraintTop_toTopOf="@+id/func_bar_bottom" />
 
         <RelativeLayout
-            app:layout_constraintBottom_toBottomOf="@id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="289dp">
+            android:layout_height="289dp"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ListView
                 android:id="@+id/supplier_list_lv"

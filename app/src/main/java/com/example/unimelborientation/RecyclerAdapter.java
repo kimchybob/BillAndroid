@@ -79,12 +79,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 }
                 if (filteredList.size() == 0){
-                    //todo api search 
+                    //todo api search
                 }
             }
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
-            System.out.println(filteredList);
             return filterResults;
         }
 
@@ -224,9 +223,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     "Loading: "+ curSubjectsList.get(getAdapterPosition()).getRowLargeText(),
                     Toast.LENGTH_SHORT).show();
             Context context = view.getContext();
-            int uid = curSubjectsList.get(getAdapterPosition()).getSid();
+            int sid = curSubjectsList.get(getAdapterPosition()).getSid();
             Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
-            intent.putExtra("uid", String.valueOf(1));
+            intent.putExtra("sid", String.valueOf(1));
             context.startActivity(intent);
         }
     }
