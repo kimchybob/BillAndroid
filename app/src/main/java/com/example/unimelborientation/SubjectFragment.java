@@ -3,6 +3,8 @@ package com.example.unimelborientation;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,14 +22,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unimelborientation.databinding.SubjectFragmentBinding;
-import com.example.unimelborientation.type.RowSubject;
+import com.example.unimelborientation.type.Subject;
+import com.example.unimelborientation.util.HttpClient;
+import com.google.gson.Gson;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,11 +46,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import cz.msebera.android.httpclient.Header;
+
 public class SubjectFragment extends Fragment {
 
     private SubjectViewModel myViewModel;
     RecyclerAdapter recyclerAdapter;
-    private final List<RowSubject> subjectsList = new ArrayList<>();
+    private final List<Subject> subjectsList = new ArrayList<>();
     private List<Map<String, String>> courseWindowData, sortWindowData, trendWindowData;
     private SubjectFragmentBinding binding;
     private PopupWindow popMenu;
@@ -46,6 +60,7 @@ public class SubjectFragment extends Fragment {
     private SimpleAdapter courseMenuAdapter, sortMenuAdapter, trendMenuAdapter;
     private int menuIndex = 0;
     private String currentCourse, currentSort, currentTrend;
+    private String uid = "1";
 
 
     @Override
@@ -54,7 +69,6 @@ public class SubjectFragment extends Fragment {
         binding = SubjectFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         initSubjectsData();
-        initRecyclerView();
         initPopWindowData();
         initFuncBarView();
         initPopWindowView();
@@ -87,30 +101,45 @@ public class SubjectFragment extends Fragment {
                     }
                 });
         courseMenuAdapter = new SimpleAdapter(getContext(), courseWindowData,
-                R.layout.item_listview_pop_win, new String[] { "name" },
-                new int[] { R.id.listview_popwind_tv });
+                R.layout.item_listview_pop_win, new String[]{"name"},
+                new int[]{R.id.listview_popwind_tv});
         sortMenuAdapter = new SimpleAdapter(getContext(), sortWindowData,
-                R.layout.item_listview_pop_win, new String[] { "name" },
-                new int[] { R.id.listview_popwind_tv });
+                R.layout.item_listview_pop_win, new String[]{"name"},
+                new int[]{R.id.listview_popwind_tv});
         trendMenuAdapter = new SimpleAdapter(getContext(), trendWindowData,
-                R.layout.item_listview_pop_win, new String[] { "name" },
-                new int[] { R.id.listview_popwind_tv });
+                R.layout.item_listview_pop_win, new String[]{"name"},
+                new int[]{R.id.listview_popwind_tv});
 
         popListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
                                     long arg3) {
                 popMenu.dismiss();
                 if (menuIndex == 0) {
-                    if (currentCourse.equals(courseWindowData.get(pos).get("name"))){
+                    if (currentCourse != null && currentCourse.equals(courseWindowData.get(pos).get("name"))) {
                         return;
                     }
                     currentCourse = courseWindowData.get(pos).get("name");
-//                    binding.progress.setVisibility(View.VISIBLE);
-//                    data = get_by_coursename(currentCourse)；
-//                    recyclerAdapter.syncCurrentSubjects(data);
-                    Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
-//                    binding.progress.setVisibility(View.Gone);
-                    //TODO update course subject filter
+                    binding.progress.setVisibility(View.VISIBLE);
+                    HttpClient.get("subject/getListByCourse/" + currentCourse, null, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                            try {
+                                JSONArray data = (JSONArray) response.get("data");
+                                ArrayList<Subject> list = new ArrayList<>();
+                                for (int index = 0; index < data.length(); index++) {
+                                    list.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class));
+                                }
+                                recyclerAdapter.syncCurrentSubjects(list);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }finally {
+                                Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
+                                binding.progress.setVisibility(View.GONE);
+                            }
+                        }
+                    });
                 } else if (menuIndex == 1) {
                     currentSort = sortWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentSort, Toast.LENGTH_SHORT).show();
@@ -118,7 +147,10 @@ public class SubjectFragment extends Fragment {
                 } else {
                     currentTrend = trendWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentTrend, Toast.LENGTH_SHORT).show();
-                    //todo jump to that subject
+                    Context context = getContext();
+                    Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
+                    intent.putExtra("sid", String.valueOf(1)); //todo name
+                    context.startActivity(intent);
                 }
             }
         });
@@ -126,9 +158,9 @@ public class SubjectFragment extends Fragment {
     }
 
     private void initPopWindowData() {
-        courseWindowData = new ArrayList<Map<String,String>>();
+        courseWindowData = new ArrayList<Map<String, String>>();
         //Todo get real date
-        String[] menuStr1 = new String[] { "Master of Information Technology",
+        String[] menuStr1 = new String[]{"MIT",
                 "Master of Information System",
                 "Master of Data Science",
                 "Master of Medicine",
@@ -141,11 +173,11 @@ public class SubjectFragment extends Fragment {
             courseWindowData.add(map1);
         }
 
-        sortWindowData = new ArrayList<Map<String,String>>();
-        String[] menuStr2 = new String[] {
+        sortWindowData = new ArrayList<Map<String, String>>();
+        String[] menuStr2 = new String[]{
                 "Subject Name Alphabet Ascending",
                 "Subject Name Alphabet Descending",
-                "Practice Score Ascending" ,
+                "Practice Score Ascending",
                 "Practice Score Descending",
                 "Theory Score Ascending",
                 "Theory Score Descending",
@@ -159,8 +191,8 @@ public class SubjectFragment extends Fragment {
             sortWindowData.add(map2);
         }
 
-        trendWindowData = new ArrayList<Map<String,String>>();
-        String[] menuStr3 = new String[] { "COMP90015",
+        trendWindowData = new ArrayList<Map<String, String>>();
+        String[] menuStr3 = new String[]{"COMP90015",
                 "COMP90020",
                 "COMP90055",
         };
@@ -174,7 +206,7 @@ public class SubjectFragment extends Fragment {
 
     private void initFuncBarView() {
 //        binding.supplierListLv;
-        binding.progress.setVisibility(View.GONE);
+//        binding.progress.setVisibility(View.GONE);
         binding.supplierListCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,7 +222,7 @@ public class SubjectFragment extends Fragment {
             public void onClick(View view) {
                 binding.supplierListSortTv.setTextColor(Color.parseColor("#39ac69"));
                 popListView.setAdapter(sortMenuAdapter);
-                popMenu.showAsDropDown(binding.supplierListSort,0,2);
+                popMenu.showAsDropDown(binding.supplierListSort, 0, 2);
                 menuIndex = 1;
             }
         });
@@ -200,35 +232,55 @@ public class SubjectFragment extends Fragment {
             public void onClick(View view) {
                 binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
                 popListView.setAdapter(trendMenuAdapter);
-                popMenu.showAsDropDown(binding.supplierListTrend,0,2);
+                popMenu.showAsDropDown(binding.supplierListTrend, 0, 2);
                 menuIndex = 2;
             }
         });
     }
 
     //faked data for test
-    private void initSubjectsData(){
-        Random rand = new Random();
-        for(int i=0; i<100; i++){
+    private void initSubjectsData() {
+        binding.progress.setVisibility(View.VISIBLE);
 
-            subjectsList.add(new RowSubject(
-                    "Subject" + i,
-                    "Comp9000" + i,
-                    rand.nextFloat() + rand.nextInt(5),
-                    rand.nextFloat() + rand.nextInt(5),
-                    rand.nextFloat()+rand.nextInt(5),
-                    i)
-            );
-        }
-        //Todo get real data from our database???
+        HttpClient.get("subject/getListByUid/" + uid, null, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+                    for (int index = 0; index < data.length(); index++) {
+                        subjectsList.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class));
+                    }
+                    initRecyclerView();
+                    binding.progress.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+//        Random rand = new Random();
+//        for (int i = 0; i < 100; i++) {
+//
+//            subjectsList.add(new Subject(
+//                    "Subject" + i,
+//                    "Comp9000" + i,
+//                    rand.nextFloat() + rand.nextInt(5),
+//                    rand.nextFloat() + rand.nextInt(5),
+//                    rand.nextFloat() + rand.nextInt(5),
+//                    i)
+//            );
     }
+    //Todo get real data from our database???
 
-    private void initRecyclerView(){
+
+    private void initRecyclerView() {
 
         recyclerAdapter = new RecyclerAdapter(subjectsList);
         binding.recyclerView.setAdapter(recyclerAdapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        if (getActivity() != null){
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        if (getActivity() != null) {
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
             binding.recyclerView.addItemDecoration(dividerItemDecoration);
         }
@@ -251,7 +303,7 @@ public class SubjectFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // TODO Add your menu entries here
-        if (getActivity() != null){
+        if (getActivity() != null) {
             getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
         }
         MenuItem item = menu.findItem(R.id.action_search);

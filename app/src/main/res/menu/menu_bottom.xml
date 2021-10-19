@@ -13,5 +13,4 @@
         android:id="@+id/myHomeFragment"
         android:icon="@drawable/ic_baseline_emoji_people"
         android:title="@string/me" />
-
 </menu>
