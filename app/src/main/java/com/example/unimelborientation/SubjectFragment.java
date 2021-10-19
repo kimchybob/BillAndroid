@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 import com.example.unimelborientation.databinding.SubjectFragmentBinding;
 import com.example.unimelborientation.type.Subject;
 import com.example.unimelborientation.util.HttpClient;
+import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -240,8 +242,6 @@ public class SubjectFragment extends Fragment {
 
     //faked data for test
     private void initSubjectsData() {
-        binding.progress.setVisibility(View.VISIBLE);
-
         HttpClient.get("subject/getListByUid/" + uid, null, new JsonHttpResponseHandler() {
 
             @Override
@@ -257,6 +257,11 @@ public class SubjectFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("getList", "onFailure: "+ responseString);
             }
         });
 

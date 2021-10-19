@@ -10,7 +10,18 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.unimelborientation.util.HttpClient;
 import com.example.unimelborientation.util.SharedPreferencesUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HeaderElement;
 
 public class LoginActivity extends Activity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
@@ -147,7 +158,12 @@ public class LoginActivity extends Activity
                     new SharedPreferencesUtils.ContentValue("remenberPassword", false),
                     new SharedPreferencesUtils.ContentValue("autoLogin", false),
                     new SharedPreferencesUtils.ContentValue("name", ""),
-                    new SharedPreferencesUtils.ContentValue("password", ""));
+                    new SharedPreferencesUtils.ContentValue("password", ""),
+                    new SharedPreferencesUtils.ContentValue("token",""),
+                    new SharedPreferencesUtils.ContentValue("uid","")
+
+            );
+
             return true;
         }
         return false;
@@ -190,39 +206,60 @@ public class LoginActivity extends Activity
 //        showToast(getAccount());
         //登录一般都是请求服务器来判断密码是否正确，要请求网络，要子线程
 //        showLoading();//显示加载框
-        Thread loginRunnable = new Thread() {
 
-            @Override
-            public void run() {
-                super.run();
-                setLoginBtnClickable(false);//点击登录后，设置登录按钮不可点击状态
+        setLoginBtnClickable(false);//点击登录后，设置登录按钮不可点击状态
 
 
-                //睡眠3秒
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//        //睡眠3秒
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
                 //判断账号和密码
-                if (getAccount().equals("admin") && getPassword().equals("123")) {
-                    showToast("success");
+
+        RequestParams params = new RequestParams();
+        params.put("username", getAccount());
+        params.put("password", getPassword());
+        HttpClient.post("api/login", params, new TextHttpResponseHandler(){
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                showToast("Invalid username or password.");
+                setLoginBtnClickable(true);
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                System.out.println(Arrays.toString(headers));
+                System.out.println(responseString);
+                if (responseString.equals("\"登录成功\"")){
                     loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
+                    showToast("Log in successfully.");
+                    String myToken = headers[3].getElements()[0].toString();
+                    System.out.println(myToken);
+                    HttpClient.authorization(myToken);
 //TODo jump main?
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();//关闭页面
-                } else {
-                    showToast("invalid account name or password");
+                    setLoginBtnClickable(true);
+
+                }else{
+                    showToast("Invalid username or password.");
+                    setLoginBtnClickable(true);
+
                 }
 
-                setLoginBtnClickable(true);  //这里解放登录按钮，设置为可以点击
+
             }
-        };
-        loginRunnable.start();
+        });
 
 
+                  //这里解放登录按钮，设置为可以点击
     }
+
+
 
 
     /**
