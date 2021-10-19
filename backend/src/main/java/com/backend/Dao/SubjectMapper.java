@@ -1,8 +1,6 @@
 package com.backend.Dao;
 
 import com.backend.Domain.Subject;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

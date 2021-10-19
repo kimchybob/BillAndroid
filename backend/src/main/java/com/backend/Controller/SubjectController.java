@@ -5,6 +5,7 @@ import com.backend.Domain.Subject;
 import com.backend.Service.MarkrecordService;
 import com.backend.Service.SubjectService;
 import com.backend.Util.AjaxResult;
+import com.backend.Util.SubjectDetailResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,11 +86,11 @@ public class SubjectController {
     public AjaxResult getSubjDetailBySid(@PathVariable("sid") int sid){
         if(sid==0)
             return AjaxResult.error("Input Empty!");
-        List<Subject> subjList=subjectService.selectByUid(sid);
-        if(subjList.isEmpty()){
+        SubjectDetailResult subjectDetails=subjectService.getSubjDetailBySid(sid);
+        if(subjectDetails.getSubjname()==null){
             return AjaxResult.warn("No corresponding subject list here.");
         }
-        return AjaxResult.success(subjList);
+        return AjaxResult.success(subjectDetails);
     }
 
 
