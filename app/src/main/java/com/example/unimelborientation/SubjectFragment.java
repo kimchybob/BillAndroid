@@ -126,18 +126,19 @@ public class SubjectFragment extends Fragment {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
+                            ArrayList<Subject> list = new ArrayList<>();
                             try {
                                 JSONArray data = (JSONArray) response.get("data");
-                                ArrayList<Subject> list = new ArrayList<>();
+
                                 for (int index = 0; index < data.length(); index++) {
                                     list.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class));
                                 }
-                                recyclerAdapter.syncCurrentSubjects(list);
+                                Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }finally {
-                                Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
+                                recyclerAdapter.syncCurrentSubjects(list);
                                 binding.progress.setVisibility(View.GONE);
                             }
                         }
