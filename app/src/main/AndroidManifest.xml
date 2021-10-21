@@ -11,12 +11,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.UnimelbOrientation"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="n">
+<!--        <activity-->
+<!--            android:name=".UniLoginActivity"-->
+<!--            android:exported="true" />-->
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -28,14 +30,12 @@
         <activity
             android:name=".subjectDetail"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-<!--        <activity android:name=".MapFragment"-->
-<!--            android:exported="true" />-->
+            android:exported="true" /> <!-- <activity android:name=".MapFragment" -->
+        <!-- android:exported="true" /> -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".UniLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
