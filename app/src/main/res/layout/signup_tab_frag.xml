@@ -4,6 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/username_signup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/editext_bg"
+        android:hint="Username"
+        android:maxLines="1"
+        android:minHeight="48dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".025"
+        app:layout_constraintWidth_percent=".8" />
+
 
     <EditText
         android:id="@+id/email_signup"
@@ -15,13 +34,14 @@
         android:minHeight="48dp"
         android:paddingLeft="20dp"
         android:paddingTop="5dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".1"
+        app:layout_constraintTop_toBottomOf="@id/username_signup"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".8" />
 
     <EditText

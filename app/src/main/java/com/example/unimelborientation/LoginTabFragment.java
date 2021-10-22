@@ -33,7 +33,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class LoginTabFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private EditText email, pass;
+    private EditText username, pass;
     private TextView forgetPass;
     private CheckBox rememberMe, keepLoggedIn;
     private Button login;
@@ -84,21 +84,21 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
     private void initViews(ViewGroup vg) {
         pb = vg.findViewById(R.id.progress_login);
         pb.setVisibility(View.GONE);
-        email = vg.findViewById(R.id.email);
+        username = vg.findViewById(R.id.username);
         pass = vg.findViewById(R.id.password);
         forgetPass = vg.findViewById(R.id.forget_pass);
         login = vg.findViewById(R.id.login);
         rememberMe = vg.findViewById(R.id.checkBox_password_uni);
         keepLoggedIn = vg.findViewById(R.id.checkBox_login_uni);
 
-        email.setTranslationX(800);
+        username.setTranslationX(800);
         pass.setTranslationX(800);
         forgetPass.setTranslationX(800);
         login.setTranslationX(800);
         rememberMe.setTranslationX(800);
         keepLoggedIn.setTranslationX(800);
 
-        email.setAlpha(v);
+        username.setAlpha(v);
         pass.setAlpha(v);
         forgetPass.setAlpha(v);
         login.setAlpha(v);
@@ -106,7 +106,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         keepLoggedIn.setAlpha(v);
 
 
-        email.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+        username.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         pass.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         forgetPass.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
@@ -149,7 +149,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
 
     @SuppressLint("SetTextI18n")
     public void setTextName() {
-        email.setText("" + getLocalName());
+        username.setText("" + getLocalName());
     }
 
     private String getLocalPassword() {
@@ -161,7 +161,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
     }
 
     public String getAccount() {
-        return email.getText().toString().trim();
+        return username.getText().toString().trim();
     }
 
     public String getPassword() {

@@ -61,8 +61,9 @@ public class SubjectFragment extends Fragment {
     private ListView listView, popListView;
     private SimpleAdapter courseMenuAdapter, sortMenuAdapter, trendMenuAdapter;
     private int menuIndex = 0;
-    private String currentCourse, currentSort, currentTrend;
+    private String currentCourse = "MIT", currentSort, currentTrend;
     private String uid = "1";
+
 
 
     @Override
