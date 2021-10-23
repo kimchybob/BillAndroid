@@ -45,26 +45,6 @@
         app:layout_constraintWidth_percent=".8" />
 
     <EditText
-        android:id="@+id/mobile_signup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/editext_bg"
-        android:hint="Mobile Num"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_signup"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent=".8" />
-
-    <EditText
         android:id="@+id/password_signup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobile_signup"
+        app:layout_constraintTop_toBottomOf="@+id/email_signup"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".8" />
 
