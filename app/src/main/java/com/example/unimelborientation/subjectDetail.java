@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ public class subjectDetail extends AppCompatActivity {
     private Button rate_button;
     private String sid;
     private Subject subject;
+    private String sub_description = "To do..."; // TODO read the input subject description
 
     private String [] commentdata = {"This is an interesting class", "The experience of designing our own app is fantastic",
             "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
@@ -103,6 +105,8 @@ public class subjectDetail extends AppCompatActivity {
                 }
             }
 
+
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
                 // Pull out the first event on the public timeline
@@ -118,6 +122,9 @@ public class subjectDetail extends AppCompatActivity {
 
         );
 
+        // Test subject description scrolling function
+        TextView des = findViewById(R.id.subject_describe);
+        des.setMovementMethod(ScrollingMovementMethod.getInstance());
         //
     }
 
