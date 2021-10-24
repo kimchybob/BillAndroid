@@ -39,16 +39,16 @@ public interface SubjectMapper {
      */
     Subject selectByPrimaryKey(Integer sid);
 
-    @Select("select * from Subject where subjName=#{subjName}")
+    @Select("select * from subject where subjName=#{subjName}")
     Subject selectByName(@Param("subjName") String subjName);
 
-    @Select("select * from Subject where subjCode=#{subjCode}")
+    @Select("select * from subject where subjCode=#{subjCode}")
     Subject selectByCode(@Param("subjCode") String subjCode);
 
-    @Select("select * from Subject where course=#{course}")
+    @Select("select * from subject where course=#{course}")
     List<Subject> selectByCourse(@Param("course") String course);
 
-    @Select("select * from Subject s inner join User u on u.course=s.course where u.uid=#{uid}")
+    @Select("select * from subject s inner join user u on u.course=s.course where u.uid=#{uid}")
     List<Subject> selectByUid(@Param("uid") Integer uid);
 
 
