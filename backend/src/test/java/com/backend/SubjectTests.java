@@ -21,8 +21,8 @@ public class SubjectTests {
 
     @Test
     public void setSubjCommentTest(){
-        Markrecord record=Markrecord.builder().subjid(1).practiscore((float) 1).theoryscore((float) 2)
-                .diffiscore((float) 3).comment("not so good").comuid(1).build();
+        Markrecord record=Markrecord.builder().subjid(2).practiscore((float) 4).theoryscore((float) 4)
+                .diffiscore((float) 4).comment("not so good").comuid(1).build();
         AjaxResult result=subjectController.setSubjComment(record);
         System.out.println(result);
     }

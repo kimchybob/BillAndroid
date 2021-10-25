@@ -3,7 +3,9 @@ package com.backend.Dao;
 import com.backend.Domain.Subject;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SubjectMapper {
@@ -50,6 +52,14 @@ public interface SubjectMapper {
 
     @Select("select * from subject s inner join user u on u.course=s.course where u.uid=#{uid}")
     List<Subject> selectByUid(@Param("uid") Integer uid);
+
+    @Update("<script> update subject s inner join ( " +
+            "select subjID, avg(practiscore) as p, avg(theoryscore) as t, avg(diffiscore) as d " +
+            "from markrecord where subjID=#{sid} " +
+            "group by subjID) as r " +
+            "on s.SID=r.subjID " +
+            "set s.practiscore=r.p, s.theoryscore=r.t, s.diffiscore=r.d, s.lastTime=#{lastTime} </script>")
+    int updateSubjectScores(@Param("sid") Integer sid, @Param("lastTime") LocalDateTime lastTime);
 
 
 

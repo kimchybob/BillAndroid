@@ -75,11 +75,12 @@ public class SubjectController {
         if(record==null||record.getSubjid()==0)
             return AjaxResult.error("Input Empty!");
         int result=markrecordService.setSubjComment(record);
-        if (result != 0)
-            return AjaxResult.success("Successful insert!");
-        else
+        if (result == 0)
             return AjaxResult.error("Insert fail!");
-
+        result=subjectService.updateSubjectScores(record.getSubjid());
+        if (result == 0)
+            return AjaxResult.error("Subject scores updating fail!");
+        return AjaxResult.success("Successful comment!");
     }
 
     @GetMapping("/subject/getSubjDetail/{sid}")

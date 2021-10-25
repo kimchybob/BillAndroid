@@ -7,6 +7,8 @@ import com.backend.Util.SubjectDetailResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -24,6 +26,12 @@ public class SubjectService {
     public Subject selectByCode(String code){return SubjectMapper.selectByCode(code);}
     public List<Subject> selectByCourse(String course){return SubjectMapper.selectByCourse(course);}
     public List<Subject> selectByUid(Integer uid){ return SubjectMapper.selectByUid(uid);}
+
+    public int updateSubjectScores(Integer sid){
+        DateTimeFormatter dateForm=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime datetime= LocalDateTime.now();
+        return SubjectMapper.updateSubjectScores(sid,datetime);
+    }
 
     public SubjectDetailResult getSubjDetailBySid(int sid) {
         Subject sub = SubjectMapper.selectByPrimaryKey(sid);
