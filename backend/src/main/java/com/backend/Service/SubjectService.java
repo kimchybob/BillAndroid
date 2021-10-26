@@ -26,6 +26,7 @@ public class SubjectService {
     public Subject selectByCode(String code){return SubjectMapper.selectByCode(code);}
     public List<Subject> selectByCourse(String course){return SubjectMapper.selectByCourse(course);}
     public List<Subject> selectByUid(Integer uid){ return SubjectMapper.selectByUid(uid);}
+    public List<Subject> selectLastSubjects(Integer limit){ return SubjectMapper.selectLastSubjects(limit);}
 
     public int updateSubjectScores(Integer sid){
         DateTimeFormatter dateForm=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

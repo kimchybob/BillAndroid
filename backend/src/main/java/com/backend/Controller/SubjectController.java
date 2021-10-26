@@ -31,7 +31,7 @@ public class SubjectController {
         if(uid==0)
             return AjaxResult.error("Input Empty!");
         List<Subject> subjList=subjectService.selectByUid(uid);
-        if(subjList.isEmpty()){
+        if(subjList==null||subjList.isEmpty()){
             return AjaxResult.warn("No corresponding subject list here.");
         }
         return AjaxResult.success(subjList);
@@ -42,7 +42,7 @@ public class SubjectController {
         if(course==null||course.isEmpty())
             return AjaxResult.error("Input Empty!");
         List<Subject> subjList=subjectService.selectByCourse(course);
-        if(subjList.isEmpty()){
+        if(subjList==null||subjList.isEmpty()){
             return AjaxResult.warn("No corresponding subject list here.");
         }
         return AjaxResult.success(subjList);
@@ -68,6 +68,16 @@ public class SubjectController {
             return AjaxResult.warn("No corresponding subject here.");
         }
         return AjaxResult.success(subject);
+    }
+
+    @GetMapping("/subject/getLastSubjects")
+    public AjaxResult getLastSubjects(){
+        int limit=3;
+        List<Subject> subjList=subjectService.selectLastSubjects(limit);
+        if(subjList==null||subjList.isEmpty()){
+            return AjaxResult.warn("No corresponding subject list here.");
+        }
+        return AjaxResult.success(subjList);
     }
 
     @PostMapping("/subject/setSubjComment")

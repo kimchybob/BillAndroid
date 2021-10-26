@@ -53,6 +53,9 @@ public interface SubjectMapper {
     @Select("select * from subject s inner join user u on u.course=s.course where u.uid=#{uid}")
     List<Subject> selectByUid(@Param("uid") Integer uid);
 
+    @Select("select * from subject order by lastTime DESC limit #{limit}")
+    List<Subject> selectLastSubjects(@Param("limit") Integer limit);
+
     @Update("<script> update subject s inner join ( " +
             "select subjID, avg(practiscore) as p, avg(theoryscore) as t, avg(diffiscore) as d " +
             "from markrecord where subjID=#{sid} " +

@@ -20,6 +20,13 @@ public class SubjectTests {
     }
 
     @Test
+    public void getLastSubjectsTest(){
+        AjaxResult result=subjectController.getLastSubjects();
+        System.out.println(result);
+    }
+
+
+    @Test
     public void setSubjCommentTest(){
         Markrecord record=Markrecord.builder().subjid(2).practiscore((float) 4).theoryscore((float) 4)
                 .diffiscore((float) 4).comment("not so good").comuid(1).build();
