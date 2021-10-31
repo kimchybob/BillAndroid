@@ -15,4 +15,8 @@ public class LoginService {
     public User selectByPrimaryKey(Integer id){
         return UserMapper.selectByPrimaryKey(id);
     }
+
+    public int insert(User user){
+        return UserMapper.insert(user);
+    }
 }
