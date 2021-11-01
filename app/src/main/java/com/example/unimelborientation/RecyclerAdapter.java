@@ -223,9 +223,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     "Loading: "+ curSubjectsList.get(getAdapterPosition()).getRowLargeText(),
                     Toast.LENGTH_SHORT).show();
             Context context = view.getContext();
-            int sid = curSubjectsList.get(getAdapterPosition()).getSid();
+            String subjectCode = curSubjectsList.get(getAdapterPosition()).getSubjcode();
             Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
-            intent.putExtra("sid", String.valueOf(1));
+            intent.putExtra("subjectCode", subjectCode);
             context.startActivity(intent);
         }
     }

@@ -82,6 +82,10 @@ public class Subject {
         this.diffiscore = diffiscore;
     }
 
+    public String getDescrip() { return descrip; }
+
+    public void setDescrip(String descrip) { this.descrip = descrip; }
+
     public String getRowLargeText(){
         return getSubjcode() + " " + getSubjname();
     }
