@@ -61,7 +61,7 @@ public class SubjectFragment extends Fragment {
     private ListView listView, popListView;
     private SimpleAdapter courseMenuAdapter, sortMenuAdapter, trendMenuAdapter;
     private int menuIndex = 0;
-    private String currentCourse = "MIT", currentSort, currentTrend;
+    private String currentCourse = "Master of Information Technology", currentSort, currentTrend;
     private String uid = "1";
 
 
@@ -166,7 +166,7 @@ public class SubjectFragment extends Fragment {
     private void initPopWindowData() {
         courseWindowData = new ArrayList<Map<String, String>>();
         //Todo get real date
-        String[] menuStr1 = new String[]{"MIT",
+        String[] menuStr1 = new String[]{"Master of Information Technology",
                 "Master of Information System",
                 "Master of Data Science",
                 "Master of Medicine",
