@@ -129,6 +129,7 @@ public class SubjectFragment extends Fragment {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             ArrayList<Subject> list = new ArrayList<>();
                             try {
+                                System.out.println(response);
                                 JSONArray data = (JSONArray) response.get("data");
 
                                 for (int index = 0; index < data.length(); index++) {

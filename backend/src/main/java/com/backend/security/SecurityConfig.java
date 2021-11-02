@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //放行signup
                 .antMatchers("/api/signup").permitAll()
-                //.antMatchers("/api/login").permitAll()
+                .antMatchers("/api/login").permitAll()
                 //地址 "/content/**" 开头的请求地址，可以给角色 ADMIN 或者 USER 的用户来使用；
                 //antMatchers("/content/** ").access("hasRole('ADMIN') or hasRole('USER')")
                 // 访问/data需要ADMIN角色

@@ -17,6 +17,15 @@ public class LoginService {
     }
 
     public int insert(User user){
+        User userByUsername = UserMapper.findUserByUsername(user.getUsername());
+        if(userByUsername!=null){
+            return 77777;
+        }
+        User userByEmail = UserMapper.findUserByEmail(user.getEmail());
+        if(userByEmail!=null){
+            return 88888;
+        }
+
         return UserMapper.insert(user);
     }
 }
