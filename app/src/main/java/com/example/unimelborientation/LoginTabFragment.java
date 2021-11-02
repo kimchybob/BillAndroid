@@ -229,9 +229,9 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                if (responseString.equals("\"登录成功\"")) {
+                if (responseString.equals("\"Successfully login!\"")) {
                     saveCheckBoxState();
-                    showToast("Log in successfully.");
+                    showToast("Successfully login!");
                     String myToken = headers[3].getElements()[0].toString();
                     System.out.println(myToken);
                     HttpClient.authorization(myToken);
@@ -242,7 +242,8 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
                     pb.setVisibility(View.GONE);
 
                 } else {
-                    showToast("Invalid username or password.");
+                    System.out.println(responseString);
+                    showToast(responseString);
                     login.setClickable(true);
                     pb.setVisibility(View.GONE);
                 }

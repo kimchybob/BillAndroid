@@ -104,20 +104,28 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
         params.put("email", getEmail());
         params.put("password", getPassword());
         showToast("Attempt to signup...");
+        System.out.println(getAccount());
         //todo signup api
-        HttpClient.post("api/login", params, new TextHttpResponseHandler() {
+        HttpClient.post("api/signup", params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 pb.setVisibility(View.GONE);
+                System.out.println(responseString);
+                showToast(responseString);
 
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 pb.setVisibility(View.GONE);
+                if (responseString.equals("\"Successfully signup!\"")){
+                    showToast(responseString);
+                    startActivity(new Intent(getContext(), UniLoginActivity.class));
+                    getActivity().finish();
+                }else{
+                    showToast(responseString);
+                }
 
-                startActivity(new Intent(getContext(), MainActivity.class));
-                getActivity().finish();
             }
         });
 
@@ -146,7 +154,7 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
             }
         });
 
