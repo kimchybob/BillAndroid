@@ -47,10 +47,10 @@ public interface SubjectMapper {
     @Select("select * from subject where subjCode=#{subjCode}")
     Subject selectByCode(@Param("subjCode") String subjCode);
 
-    @Select("select * from subject where course=#{course}")
+    @Select("select * from subject where FIND_IN_SET(#{course},course)")
     List<Subject> selectByCourse(@Param("course") String course);
 
-    @Select("select * from subject s inner join user u on u.course=s.course where u.uid=#{uid}")
+    @Select("select * from subject s inner join user u on FIND_IN_SET(u.course,s.course) where u.uid=#{uid}")
     List<Subject> selectByUid(@Param("uid") Integer uid);
 
     @Select("select * from subject order by lastTime DESC limit #{limit}")
