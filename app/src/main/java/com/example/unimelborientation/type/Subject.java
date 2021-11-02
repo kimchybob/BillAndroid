@@ -11,7 +11,7 @@ public class Subject {
     float practiscore;
     float diffiscore;
     int sid;
-    int prisid;
+    String prisid;
     String course;
     String lasttime;
     String descrip;
