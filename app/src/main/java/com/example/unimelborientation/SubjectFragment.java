@@ -129,6 +129,7 @@ public class SubjectFragment extends Fragment {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             ArrayList<Subject> list = new ArrayList<>();
                             try {
+                                System.out.println(response);
                                 JSONArray data = (JSONArray) response.get("data");
 
                                 for (int index = 0; index < data.length(); index++) {
@@ -149,11 +150,12 @@ public class SubjectFragment extends Fragment {
                     Toast.makeText(getContext(), currentSort, Toast.LENGTH_SHORT).show();
                     recyclerAdapter.sort(currentSort);
                 } else {
+
                     currentTrend = trendWindowData.get(pos).get("name");
                     Toast.makeText(getContext(), currentTrend, Toast.LENGTH_SHORT).show();
                     Context context = getContext();
-                    Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
-                    intent.putExtra("sid", String.valueOf(1)); //todo name
+                    Intent intent = new Intent(context, subjectDetail.class); //jump to @'s activity
+                    intent.putExtra("subjectCode", currentTrend); //todo name
                     context.startActivity(intent);
                 }
             }
@@ -196,6 +198,7 @@ public class SubjectFragment extends Fragment {
         }
 
         trendWindowData = new ArrayList<Map<String, String>>();
+
         String[] menuStr3 = new String[]{"COMP90015",
                 "COMP90020",
                 "COMP90055",
@@ -232,12 +235,42 @@ public class SubjectFragment extends Fragment {
         });
 
         binding.supplierListTrend.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
-                popListView.setAdapter(trendMenuAdapter);
-                popMenu.showAsDropDown(binding.supplierListTrend, 0, 2);
-                menuIndex = 2;
+                Toast.makeText(getContext(), "Extracting current trends...",Toast.LENGTH_SHORT).show();
+                HttpClient.get("subject/getLastSubjects", null, new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        try {
+                            JSONArray data = (JSONArray) response.get("data");
+                            trendWindowData.clear();
+                            Map<String, String> map;
+                            for (int index = 0; index < data.length(); index++) {
+                                map = new HashMap<String, String>();
+                                map.put("name", new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class).getSubjcode());
+                                trendWindowData.add(map);
+                            }
+                            binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
+                            trendMenuAdapter = new SimpleAdapter(getContext(), trendWindowData,
+                                    R.layout.item_listview_pop_win, new String[]{"name"},
+                                    new int[]{R.id.listview_popwind_tv});
+                            popListView.setAdapter(trendMenuAdapter);
+                            popMenu.showAsDropDown(binding.supplierListTrend, 0, 2);
+                            menuIndex = 2;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Log.d("getTrend", "onFailure: "+ responseString);
+                        Toast.makeText(getContext(),
+                                responseString,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

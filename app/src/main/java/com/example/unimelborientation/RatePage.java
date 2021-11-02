@@ -21,6 +21,8 @@ public class RatePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_page);
 
+        subject_name = getIntent().getStringExtra("subjectname");
+
         ratingBar_Theory = findViewById(R.id.Theory_rate_bar);
         ratingBar_Theory.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

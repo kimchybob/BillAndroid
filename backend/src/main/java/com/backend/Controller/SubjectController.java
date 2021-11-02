@@ -93,6 +93,27 @@ public class SubjectController {
         return AjaxResult.success("Successful comment!");
     }
 
+    /**
+     * solution for Cannot determine value type from string:
+     * https://www.it610.com/article/1188563824857423872.htm
+     * @Author Liam
+     * @param sid
+     * @return
+     */
+    @GetMapping("/subject/getCommentBySubId/{sid}")
+    public AjaxResult getCommentByUid(@PathVariable("sid") int sid){
+        if(sid==0)
+            return AjaxResult.error("Input Empty!");
+
+        List<Markrecord> markrecordList = markrecordService.selectBySubjId(sid);
+
+        if(markrecordList.isEmpty()){
+            return AjaxResult.warn("No corresponding comment list here.");
+        }
+        return AjaxResult.success(markrecordList);
+    }
+
+
     @GetMapping("/subject/getSubjDetail/{sid}")
     public AjaxResult getSubjDetailBySid(@PathVariable("sid") int sid){
         if(sid==0)

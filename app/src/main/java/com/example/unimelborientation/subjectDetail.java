@@ -29,13 +29,13 @@ import cz.msebera.android.httpclient.Header;
 public class subjectDetail extends AppCompatActivity {
 
     private String subject_name = "Mobile computing"; //TODO read the input subject info
-    private String pre_Subject = "AI planning"; // TODO read the input pre subject info
+    //private String pre_Subject = "AI planning"; // TODO read the input pre subject info
     private String subject_code = "COMP90018"; // TODO read the input subject code value
     private String theory_Rate = " 4.0"; // TODO read the input theory rate value
     private String practice_Rate = " 4.2"; // TODO read the input practice rate value
     private String difficulty_Rate = " 4.4"; // TODO read the input difficulty rate value
     private Button rate_button;
-    private String sid;
+    private String subjectCode;
     private Subject subject;
     private String sub_description = "To do..."; // TODO read the input subject description
 
@@ -54,22 +54,24 @@ public class subjectDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //test
-        sid = getIntent().getStringExtra("sid");
+        subjectCode = getIntent().getStringExtra("subjectCode");
 
-        HttpClient.get("subject/getListByUid/" + sid, null, new JsonHttpResponseHandler(){
+        HttpClient.get("subject/getSubjByCode/" + subjectCode, null, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
-                    JSONArray data = (JSONArray) response.get("data");
-                    subject = new Gson().fromJson(String.valueOf((JSONObject) data.get(0)), Subject.class);
-                    System.out.println(subject);
+                    System.out.println(response);
+                    JSONObject data = (JSONObject) response.get("data");
+                    subject = new Gson().fromJson(String.valueOf(data), Subject.class);
                     difficulty_Rate = String.valueOf(subject.getDiffiscore());
                     subject_name = subject.getSubjname();
                     subject_code = subject.getSubjcode();
-                    pre_Subject = subject.getSubjname();
+                    //pre_Subject = subject.getSubjname();
                     theory_Rate = String.valueOf(subject.getTheoryscore());
                     practice_Rate = String.valueOf(subject.getPractiscore());
+                    sub_description = subject.getDescrip();
+
 
 
 
@@ -82,20 +84,26 @@ public class subjectDetail extends AppCompatActivity {
                     title.setText(subject_name);
                     TextView code = findViewById(R.id.subject_code);
                     code.setText(subject_code);
-                    TextView pre = findViewById(R.id.Pre_class);
-                    pre.setText("Pre Subject: " + pre_Subject);
+                    //TextView pre = findViewById(R.id.Pre_class);
+                    //pre.setText("Pre Subject: " + pre_Subject);
                     TextView theory = findViewById(R.id.rateTheory);
                     theory.setText("Theory rate: "+ theory_Rate);
                     TextView practice = findViewById(R.id.ratePractice);
                     practice.setText("Practice rate: " + practice_Rate);
                     TextView difficulty = findViewById(R.id.rateDifficulty);
                     difficulty.setText("Difficulity rate: " + difficulty_Rate);
+                    // Test subject description scrolling function
+                    TextView des = findViewById(R.id.subject_describe);
+                    des.setMovementMethod(ScrollingMovementMethod.getInstance());
+                    des.setText(sub_description);
+                    //
 
                     rate_button = findViewById(R.id.rate_button);
                     rate_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(subjectDetail.this, RatePage.class);
+                            intent.putExtra("subjectname", subject_name);
                             startActivity(intent);
                         }
                     });
@@ -122,10 +130,7 @@ public class subjectDetail extends AppCompatActivity {
 
         );
 
-        // Test subject description scrolling function
-        TextView des = findViewById(R.id.subject_describe);
-        des.setMovementMethod(ScrollingMovementMethod.getInstance());
-        //
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
