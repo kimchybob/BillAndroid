@@ -51,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 从User中获取权限信息
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         // 创建Token
-        String token = JwtTokenUtils.createToken(user.getUsername(), authorities.toString());
+        String token = JwtTokenUtils.createToken(user.getUsername(), user.getPassword(),authorities.toString());
 
         // 设置编码 防止乱码问题
         response.setCharacterEncoding("UTF-8");
@@ -64,6 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setContentType("text/json;charset=utf-8");
         // 将反馈塞到HttpServletResponse中返回给前台
         response.getWriter().write(JSON.toJSONString("Successfully login!"));
+        response.getWriter().write(JSON.toJSONString("UserId: "+user.getPassword()));
     }
 
     /**

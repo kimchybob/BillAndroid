@@ -24,19 +24,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (username == null || "".equals(username))
         {
-            throw new RuntimeException("用户不能为空");
+            throw new RuntimeException("Username not found");
         }
         // 调用方法查询用户
         User user = userMapper.findUserByUsername(username);
         if (user == null)
         {
-            throw new RuntimeException("用户不存在");
+            throw new RuntimeException("User not exist");
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 //        for (Role role:userMapper.findRoleByUsername(username))
 //        {
 //            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName()));
 //        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),"{noop}"+user.getPassword(),authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),""+user.getUid(),authorities);
     }
 }
