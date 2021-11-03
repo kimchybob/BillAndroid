@@ -9,9 +9,8 @@
         android:id="@+id/mapFragment"
         android:icon="@drawable/ic_baseline_my_location"
         android:title="@string/unimap" />
-    <item
-        android:id="@+id/myHomeFragment"
-        android:icon="@drawable/ic_baseline_emoji_people"
-        android:title="@string/me" />
-
+<!--    <item-->
+<!--        android:id="@+id/myHomeFragment"-->
+<!--        android:icon="@drawable/ic_baseline_emoji_people"-->
+<!--        android:title="@string/me" />-->
 </menu>

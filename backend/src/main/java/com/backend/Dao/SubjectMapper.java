@@ -1,11 +1,11 @@
 package com.backend.Dao;
 
 import com.backend.Domain.Subject;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SubjectMapper {
@@ -41,17 +41,28 @@ public interface SubjectMapper {
      */
     Subject selectByPrimaryKey(Integer sid);
 
-    @Select("select * from Subject where subjName=#{subjName}")
+    @Select("select * from subject where subjName=#{subjName}")
     Subject selectByName(@Param("subjName") String subjName);
 
-    @Select("select * from Subject where subjCode=#{subjCode}")
+    @Select("select * from subject where subjCode=#{subjCode}")
     Subject selectByCode(@Param("subjCode") String subjCode);
 
-    @Select("select * from Subject where course=#{course}")
+    @Select("select * from subject where FIND_IN_SET(#{course},course)")
     List<Subject> selectByCourse(@Param("course") String course);
 
-    @Select("select * from Subject s inner join User u on u.course=s.course where u.uid=#{uid}")
+    @Select("select * from subject s inner join user u on FIND_IN_SET(u.course,s.course) where u.uid=#{uid}")
     List<Subject> selectByUid(@Param("uid") Integer uid);
+
+    @Select("select * from subject order by lastTime DESC limit #{limit}")
+    List<Subject> selectLastSubjects(@Param("limit") Integer limit);
+
+    @Update("<script> update subject s inner join ( " +
+            "select subjID, avg(practiscore) as p, avg(theoryscore) as t, avg(diffiscore) as d " +
+            "from markrecord where subjID=#{sid} " +
+            "group by subjID) as r " +
+            "on s.SID=r.subjID " +
+            "set s.practiscore=r.p, s.theoryscore=r.t, s.diffiscore=r.d, s.lastTime=#{lastTime} </script>")
+    int updateSubjectScores(@Param("sid") Integer sid, @Param("lastTime") LocalDateTime lastTime);
 
 
 

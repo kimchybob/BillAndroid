@@ -2,14 +2,17 @@
     <string name="app_name">Unimelb Orientation</string>
     <string name="account">account/username</string>
     <string name="password">password</string>
-    <string name="check_password">remember me</string>
-    <string name="check_login">keep login status</string>
+    <string name="check_password">Remember Me</string>
+    <string name="check_login">Keep Me Logged In</string>
     <string name="login">login</string>
     <string name="loading">loading</string>
     <string name="searchTextHint">Search Subject Code or Name</string>
     <string name="search">Search</string>
     <string name="filter">filter</string>
     <string name="switchAI">SwitchAI</string>
+    <string name="Subjects">Subjects</string>
+    <string name="UniMap">UniMap</string>
+    <string name="Me">Me</string>
     <string name="Sort">Sort</string>
     <string name="Course">Course</string>
     <string name="Trend">Trend</string>
@@ -20,4 +23,5 @@
     <string name="subjects">Subjects</string>
     <string name="unimap">UniMap</string>
     <string name="me">Me</string>
+    <string name="unimelb_motto">Postera Crescam Laude.</string>
 </resources>

@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.unimelborientation.type.RowSubject;
+import com.example.unimelborientation.type.Subject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,10 +22,10 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
-    List<RowSubject> curSubjectsList;
-    List<RowSubject> subjectsListAll;
+    List<Subject> curSubjectsList;
+    List<Subject> subjectsListAll;
 
-    public RecyclerAdapter(List<RowSubject> curSubjectsList) {
+    public RecyclerAdapter(List<Subject> curSubjectsList) {
         this.curSubjectsList = curSubjectsList;
         System.out.println(curSubjectsList);
         this.subjectsListAll = new ArrayList<>(curSubjectsList);
@@ -65,26 +65,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
-            List<RowSubject> filteredList = new ArrayList<>();
+            List<Subject> filteredList = new ArrayList<>();
             System.out.println(subjectsListAll);
             if (charSequence.toString().isEmpty()) {
                 filteredList.addAll(subjectsListAll);
             } else {
-                for (RowSubject subject : subjectsListAll) {
-                    if (subject.getSubjectName().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                for (Subject subject : subjectsListAll) {
+                    if (subject.getSubjname().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(subject);
                     }
-                    if (subject.getSubjectCode().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                    if (subject.getSubjcode().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(subject);
                     }
                 }
                 if (filteredList.size() == 0){
-                    //todo api search 
+                    //todo api search
                 }
             }
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
-            System.out.println(filteredList);
             return filterResults;
         }
 
@@ -93,13 +92,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             curSubjectsList.clear();
-            List<RowSubject> filterList= (List<RowSubject>) filterResults.values;
+            List<Subject> filterList= (List<Subject>) filterResults.values;
             curSubjectsList.addAll(filterList);
             notifyDataSetChanged();
         }
     };
 
-    public void syncCurrentSubjects(ArrayList<RowSubject> subjectsList){
+    public void syncCurrentSubjects(ArrayList<Subject> subjectsList){
         curSubjectsList = subjectsList;
         subjectsListAll = curSubjectsList;
         notifyDataSetChanged();
@@ -108,10 +107,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @SuppressLint("NotifyDataSetChanged")
     public void sort(String method){
         if (method.equals("Practice Score Ascending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    float res = o1.getPracticeDegree() - o2.getPracticeDegree();
+                public int compare(Subject o1, Subject o2) {
+                    float res = o1.getPractiscore() - o2.getPractiscore();
                     if (res == 0){
                         return 0;
                     }else{
@@ -121,10 +120,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
         if (method.equals("Practice Score Descending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    float res = o1.getPracticeDegree() - o2.getPracticeDegree();
+                public int compare(Subject o1, Subject o2) {
+                    float res = o1.getPractiscore() - o2.getPractiscore();
                     if (res == 0){
                         return 0;
                     }else{
@@ -134,10 +133,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
         if (method.equals("Theory Score Ascending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    float res = o1.getTheoryDegree() - o2.getTheoryDegree();
+                public int compare(Subject o1, Subject o2) {
+                    float res = o1.getTheoryscore() - o2.getTheoryscore();
                     if (res == 0){
                         return 0;
                     }else{
@@ -147,10 +146,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
         if (method.equals("Theory Score Descending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    float res = o1.getTheoryDegree() - o2.getTheoryDegree();
+                public int compare(Subject o1, Subject o2) {
+                    float res = o1.getTheoryscore() - o2.getTheoryscore();
                     if (res == 0){
                         return 0;
                     }else{
@@ -160,10 +159,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
         if (method.equals("Difficulty Score Ascending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    float res = o1.getDifficultyDegree() - o2.getDifficultyDegree();
+                public int compare(Subject o1, Subject o2) {
+                    float res = o1.getDiffiscore() - o2.getDiffiscore();
                     if (res == 0){
                         return 0;
                     }else{
@@ -173,10 +172,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
         if (method.equals("Difficulty Score Descending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    float res = o1.getDifficultyDegree() - o2.getDifficultyDegree();
+                public int compare(Subject o1, Subject o2) {
+                    float res = o1.getDiffiscore() - o2.getDiffiscore();
                     if (res == 0){
                         return 0;
                     }else{
@@ -186,18 +185,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
         if (method.equals("Subject Name Alphabet Ascending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    return o1.getSubjectName().compareTo(o2.getSubjectName());
+                public int compare(Subject o1, Subject o2) {
+                    return o1.getSubjname().compareTo(o2.getSubjname());
                 }
             });
         }
         if (method.equals("Subject Name Alphabet Descending")){
-            Collections.sort(curSubjectsList, new Comparator<RowSubject>() {
+            Collections.sort(curSubjectsList, new Comparator<Subject>() {
                 @Override
-                public int compare(RowSubject o1, RowSubject o2) {
-                    return -(o1.getSubjectName().compareTo(o2.getSubjectName()));
+                public int compare(Subject o1, Subject o2) {
+                    return -(o1.getSubjname().compareTo(o2.getSubjname()));
                 }
             });
         }
@@ -224,9 +223,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     "Loading: "+ curSubjectsList.get(getAdapterPosition()).getRowLargeText(),
                     Toast.LENGTH_SHORT).show();
             Context context = view.getContext();
-            int sid = curSubjectsList.get(getAdapterPosition()).getSid();
+            String subjectCode = curSubjectsList.get(getAdapterPosition()).getSubjcode();
             Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
-            intent.putExtra("sid", sid);
+            intent.putExtra("subjectCode", subjectCode);
             context.startActivity(intent);
         }
     }

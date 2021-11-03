@@ -4,6 +4,9 @@
     <string name="search">Search</string>
     <string name="filter">filter</string>
     <string name="switchAI">SwitchAI</string>
+    <string name="Subjects">Subjects</string>
+    <string name="UniMap">UniMap</string>
+    <string name="Me">Me</string>
     <string name="Sort">Sort</string>
     <string name="Course">Course</string>
     <string name="Trend">Trend</string>
@@ -14,4 +17,5 @@
     <string name="subjects">Subjects</string>
     <string name="unimap">UniMap</string>
     <string name="me">Me</string>
+    <string name="unimelb_motto">Postera Crescam Laude.</string>
 </resources>

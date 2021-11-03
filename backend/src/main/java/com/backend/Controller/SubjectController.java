@@ -5,6 +5,7 @@ import com.backend.Domain.Subject;
 import com.backend.Service.MarkrecordService;
 import com.backend.Service.SubjectService;
 import com.backend.Util.AjaxResult;
+import com.backend.Util.SubjectDetailResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class SubjectController {
         if(uid==0)
             return AjaxResult.error("Input Empty!");
         List<Subject> subjList=subjectService.selectByUid(uid);
-        if(subjList.isEmpty()){
+        if(subjList==null||subjList.isEmpty()){
             return AjaxResult.warn("No corresponding subject list here.");
         }
         return AjaxResult.success(subjList);
@@ -41,7 +42,7 @@ public class SubjectController {
         if(course==null||course.isEmpty())
             return AjaxResult.error("Input Empty!");
         List<Subject> subjList=subjectService.selectByCourse(course);
-        if(subjList.isEmpty()){
+        if(subjList==null||subjList.isEmpty()){
             return AjaxResult.warn("No corresponding subject list here.");
         }
         return AjaxResult.success(subjList);
@@ -69,16 +70,59 @@ public class SubjectController {
         return AjaxResult.success(subject);
     }
 
+    @GetMapping("/subject/getLastSubjects")
+    public AjaxResult getLastSubjects(){
+        int limit=3;
+        List<Subject> subjList=subjectService.selectLastSubjects(limit);
+        if(subjList==null||subjList.isEmpty()){
+            return AjaxResult.warn("No corresponding subject list here.");
+        }
+        return AjaxResult.success(subjList);
+    }
+
     @PostMapping("/subject/setSubjComment")
     public AjaxResult setSubjComment(@RequestBody Markrecord record){
         if(record==null||record.getSubjid()==0)
             return AjaxResult.error("Input Empty!");
         int result=markrecordService.setSubjComment(record);
-        if (result != 0)
-            return AjaxResult.success("Successful insert!");
-        else
+        if (result == 0)
             return AjaxResult.error("Insert fail!");
+        result=subjectService.updateSubjectScores(record.getSubjid());
+        if (result == 0)
+            return AjaxResult.error("Subject scores updating fail!");
+        return AjaxResult.success("Successful comment!");
+    }
 
+    /**
+     * solution for Cannot determine value type from string:
+     * https://www.it610.com/article/1188563824857423872.htm
+     * @Author Liam
+     * @param sid
+     * @return
+     */
+    @GetMapping("/subject/getCommentBySubId/{sid}")
+    public AjaxResult getCommentByUid(@PathVariable("sid") int sid){
+        if(sid==0)
+            return AjaxResult.error("Input Empty!");
+
+        List<Markrecord> markrecordList = markrecordService.selectBySubjId(sid);
+
+        if(markrecordList.isEmpty()){
+            return AjaxResult.warn("No corresponding comment list here.");
+        }
+        return AjaxResult.success(markrecordList);
+    }
+
+
+    @GetMapping("/subject/getSubjDetail/{sid}")
+    public AjaxResult getSubjDetailBySid(@PathVariable("sid") int sid){
+        if(sid==0)
+            return AjaxResult.error("Input Empty!");
+        SubjectDetailResult subjectDetails=subjectService.getSubjDetailBySid(sid);
+        if(subjectDetails.getSubjname()==null){
+            return AjaxResult.warn("No corresponding subject list here.");
+        }
+        return AjaxResult.success(subjectDetails);
     }
 
 
