@@ -16,6 +16,14 @@ public class LoginService {
         return UserMapper.selectByPrimaryKey(id);
     }
 
+    public int getUserIdByUsername(String username){
+        User userByUsername = UserMapper.findUserByUsername(username);
+        if(userByUsername==null){
+            return 77777;
+        }
+        return userByUsername.getUid();
+    }
+
     public int insert(User user){
         User userByUsername = UserMapper.findUserByUsername(user.getUsername());
         if(userByUsername!=null){

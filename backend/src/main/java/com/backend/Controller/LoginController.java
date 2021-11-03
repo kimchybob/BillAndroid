@@ -5,6 +5,7 @@ import com.backend.Domain.User;
 import com.backend.Service.LoginService;
 import com.backend.Util.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,12 @@ public class LoginController {
 //        return loginService.selectByPrimaryKey(id);
 //    }
 
+    @GetMapping("/getUidByUsername")
+    public AjaxResult login(@RequestParam("username") String username){
+
+        int userIdByUsername = loginService.getUserIdByUsername(username);
+        return AjaxResult.success(userIdByUsername);
+    }
     @PostMapping("/api/signup")
     public AjaxResult insertUser(@RequestParam("username") String username,
                                  @RequestParam("password") String password,

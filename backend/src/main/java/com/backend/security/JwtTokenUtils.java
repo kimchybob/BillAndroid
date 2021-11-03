@@ -26,7 +26,7 @@ public class JwtTokenUtils {
     /**
      * 生成Token
      */
-    public static String createToken(String username, String userId, String rolesStr) {
+    public static String createToken(String username, String rolesStr) {
         Map<String,Object> roleMap = new HashMap<>();
         roleMap.put(ROLE_CLAIMS, rolesStr);
         roleMap.put(ROLE_CLAIMS, "[ROLE_USER]");
@@ -35,7 +35,6 @@ public class JwtTokenUtils {
                 .setSubject(username)
                 .setClaims(roleMap)
                 .claim("username",username)
-                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRITION))
                 .signWith(SignatureAlgorithm.HS256, APPSECRET_KEY).compact();
