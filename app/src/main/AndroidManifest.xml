@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.unimelborientation">
+    package="com.example.unimelborientation" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,25 +12,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
-        android:theme="@style/Theme.UnimelbOrientation" >
+        android:theme="@style/Theme.UnimelbOrientation">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyARFJxcy7F2ywrCzP0jCuIojJZOymyoeTk" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
 
         <activity
             android:name=".RatePage"
             android:exported="true" />
         <activity
+            android:name=".FindRouteActivity"
+            android:exported="true" />
+        <activity
             android:name=".subjectDetail"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-<!--        <activity android:name=".MapFragment"-->
-<!--            android:exported="true" />-->
+            android:exported="true" /> <!-- <activity android:name=".MapFragment" -->
+        <!-- android:exported="true" /> -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">

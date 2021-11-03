@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="locations">
+        <item>Please Select Location</item>
+        <item>Baillieu Library</item>
+        <item>Old Engineering Building</item>
+        <item>Giblin Eunson Library</item>
+        <item>Stop 1</item>
+    </string-array>
+    <string-array name="travelMethod">
+        <item>Walk</item>
+        <item>Drive</item>
+        <item>Bike</item>
+        <item>Transit</item>
+    </string-array>
+</resources>
