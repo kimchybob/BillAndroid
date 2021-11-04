@@ -1,6 +1,8 @@
 package com.backend.security;
 
 import com.alibaba.fastjson.JSON;
+import com.backend.Service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -21,6 +23,9 @@ import java.util.Collection;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private LoginService loginService;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager)
     {
@@ -51,7 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 从User中获取权限信息
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         // 创建Token
-        String token = JwtTokenUtils.createToken(user.getUsername(), authorities.toString());
+        String token = JwtTokenUtils.createToken(user.getUsername(),authorities.toString());
 
         // 设置编码 防止乱码问题
         response.setCharacterEncoding("UTF-8");

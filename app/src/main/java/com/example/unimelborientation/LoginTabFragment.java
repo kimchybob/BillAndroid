@@ -24,8 +24,12 @@ import com.example.unimelborientation.util.HttpClient;
 import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -232,10 +236,26 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
                 if (responseString.equals("\"Successfully login!\"")) {
                     saveCheckBoxState();
                     showToast("Successfully login!");
+
                     String myToken = headers[3].getElements()[0].toString();
                     System.out.println(myToken);
                     HttpClient.authorization(myToken);
 //TODo jump main?
+                    RequestParams localparams = new RequestParams();
+                    localparams.put("username", getAccount());
+                    HttpClient.get("getUidByUsername", localparams, new JsonHttpResponseHandler(){
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            System.out.println(response);
+                            try {
+                                local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", response.get("data")));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+
                     startActivity(new Intent(getContext(), MainActivity.class));
                     getActivity().finish();
                     login.setClickable(true);

@@ -224,8 +224,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     Toast.LENGTH_SHORT).show();
             Context context = view.getContext();
             String subjectCode = curSubjectsList.get(getAdapterPosition()).getSubjcode();
+            Integer sid_int = curSubjectsList.get(getAdapterPosition()).getSid();
+            String sid = String.valueOf(sid_int);
             Intent intent = new Intent(context, subjectDetail.class); //Todo jump to @'s activity
             intent.putExtra("subjectCode", subjectCode);
+            intent.putExtra("sid", sid);
             context.startActivity(intent);
         }
     }

@@ -23,6 +23,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import cz.msebera.android.httpclient.Header;
 
 
@@ -39,29 +42,42 @@ public class subjectDetail extends AppCompatActivity {
     private Subject subject;
     private String sub_description = "To do..."; // TODO read the input subject description
 
-    private String [] commentdata = {"This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class","This is an interesting class", "The experience of designing our own app is fantastic",
-            "Hope you enjoy the class"}; // TODO read the input comment data
+    private String [] commentdata = {}; // TODO read the input comment data
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //test
+
         subjectCode = getIntent().getStringExtra("subjectCode");
+        String sid = getIntent().getStringExtra("sid");
+
+        HttpClient.get("subject/getCommentBySubId/" + sid, null, new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        try {
+                            System.out.println(response);
+                            JSONArray data = (JSONArray) response.get("data");
+                            String [] comment_list = new String[data.length()];
+                            for(int i = 0; i<data.length(); i++){
+                                JSONObject list = data.getJSONObject(i);
+                                comment_list[i] = list.getString("comment");
+                            }
+                            commentdata = comment_list;
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+
+        );
 
         HttpClient.get("subject/getSubjByCode/" + subjectCode, null, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
-                    System.out.println(response);
                     JSONObject data = (JSONObject) response.get("data");
                     subject = new Gson().fromJson(String.valueOf(data), Subject.class);
                     difficulty_Rate = String.valueOf(subject.getDiffiscore());
@@ -104,6 +120,7 @@ public class subjectDetail extends AppCompatActivity {
                         public void onClick(View view) {
                             Intent intent = new Intent(subjectDetail.this, RatePage.class);
                             intent.putExtra("subjectname", subject_name);
+                            intent.putExtra("sid",sid);
                             startActivity(intent);
                         }
                     });
@@ -129,6 +146,8 @@ public class subjectDetail extends AppCompatActivity {
         }
 
         );
+
+
 
 
     }

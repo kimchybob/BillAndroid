@@ -61,7 +61,13 @@ public class JwtTokenUtils {
         Claims claims = Jwts.parser().setSigningKey(APPSECRET_KEY).parseClaimsJws(token).getBody();
         return claims.get("username").toString();
     }
-
+    /**
+     * 从Token中获取userId
+     */
+    public static String getUserId(String token){
+        Claims claims = Jwts.parser().setSigningKey(APPSECRET_KEY).parseClaimsJws(token).getBody();
+        return claims.get("userId").toString();
+    }
     /**
      * 从Token中获取用户角色
      */

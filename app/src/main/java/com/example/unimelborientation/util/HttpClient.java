@@ -4,6 +4,9 @@ import android.os.Looper;
 
 import com.loopj.android.http.*;
 
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.entity.StringEntity;
+
 public class HttpClient {
     private static final String BASE_URL = "http://111.231.22.102:8082/";
 
@@ -19,6 +22,10 @@ public class HttpClient {
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         myClient.post(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    public static void post(String url, StringEntity entity, String contentType, AsyncHttpResponseHandler responseHandler) {
+        myClient.post(null, getAbsoluteUrl(url), entity, contentType, responseHandler );
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
