@@ -7,4 +7,5 @@ public class AddressResult {
     private String address;
     private String buildname;
     private String type;
+    private String latlng;
 }

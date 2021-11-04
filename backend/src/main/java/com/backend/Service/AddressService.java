@@ -30,6 +30,7 @@ public class AddressService {
             subRes.setBuildname(map.getBuildname());
             subRes.setAddress(map.getAddress());
             subRes.setType(sm.getType());
+            subRes.setLatlng(map.getLatlng());
             res.add(subRes);
         }
         return res;
