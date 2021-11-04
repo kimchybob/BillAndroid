@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unimelborientation.util.HttpClient;
+import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -30,13 +31,14 @@ public class RatePage extends AppCompatActivity {
     private RatingBar ratingBar_Difficulty;
     private Button submit_button;
     private String subject_name = "Mobile computing"; // TODO read input subject name
-
+    private SharedPreferencesUtils local_setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_page);
 
         subject_name = getIntent().getStringExtra("subjectname");
+        local_setting = new SharedPreferencesUtils(this, "setting");
 
         TextView subtitle = findViewById(R.id.rate_page_head);
         subtitle.setText(subject_name);
@@ -76,7 +78,8 @@ public class RatePage extends AppCompatActivity {
                 float theoryscore = ratingBar_Theory.getRating();
                 float diffiscore = ratingBar_Difficulty.getRating();
                 Integer subjid = 1; // TODO use the real id
-                Integer comuid = 1; // TODO use the real id
+                Integer comuid = local_setting.getInt("uid");
+                System.out.println(comuid);// TODO use the real id
                 String comment = com.getText().toString();
 
 
