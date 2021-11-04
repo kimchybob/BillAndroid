@@ -120,6 +120,7 @@ public class subjectDetail extends AppCompatActivity {
                         public void onClick(View view) {
                             Intent intent = new Intent(subjectDetail.this, RatePage.class);
                             intent.putExtra("subjectname", subject_name);
+                            intent.putExtra("sid",sid);
                             startActivity(intent);
                         }
                     });

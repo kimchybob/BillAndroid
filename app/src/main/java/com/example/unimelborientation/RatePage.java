@@ -39,6 +39,9 @@ public class RatePage extends AppCompatActivity {
 
         subject_name = getIntent().getStringExtra("subjectname");
         local_setting = new SharedPreferencesUtils(this, "setting");
+        String sid_string = getIntent().getStringExtra("sid");
+        int sid = Integer.parseInt(sid_string);
+
 
         TextView subtitle = findViewById(R.id.rate_page_head);
         subtitle.setText(subject_name);
@@ -77,9 +80,10 @@ public class RatePage extends AppCompatActivity {
                 float practiscore = ratingBar_Practice.getRating();
                 float theoryscore = ratingBar_Theory.getRating();
                 float diffiscore = ratingBar_Difficulty.getRating();
-                Integer subjid = 1; // TODO use the real id
                 Integer comuid = local_setting.getInt("uid");
                 System.out.println(comuid);// TODO use the real id
+
+                Integer subjid = sid; // TODO use the real id
                 String comment = com.getText().toString();
 
 
