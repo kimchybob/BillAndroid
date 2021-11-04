@@ -61,7 +61,6 @@ public class subjectDetail extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
-                    System.out.println(response);
                     JSONObject data = (JSONObject) response.get("data");
                     subject = new Gson().fromJson(String.valueOf(data), Subject.class);
                     difficulty_Rate = String.valueOf(subject.getDiffiscore());

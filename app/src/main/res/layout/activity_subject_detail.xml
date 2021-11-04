@@ -7,21 +7,6 @@
     tools:context=".subjectDetail">
 
 
-    <TextView
-        android:id="@+id/subject_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:text="Mobile computing"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
-
     <!--    <TextView-->
 <!--        android:id="@+id/Pre_class"-->
 <!--        android:layout_width="371dp"-->
@@ -37,6 +22,21 @@
 <!--        app:layout_constraintVertical_bias="0.291" />-->
 
     <TextView
+        android:id="@+id/subject_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|left"
+        android:text="Mobile computing"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571" />
+
+    <TextView
         android:id="@+id/subject_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,11 +44,12 @@
         android:text="COMP90018"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:layout_constraintVertical_bias="0.0" />
+
 
     <TextView
         android:id="@+id/rateTheory"
@@ -56,14 +57,13 @@
         android:layout_height="wrap_content"
         android:gravity="center|left"
         android:text="Theory rate: "
-        android:textSize="20dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintVertical_bias="0.923" />
 
     <TextView
         android:id="@+id/ratePractice"
@@ -71,11 +71,11 @@
         android:layout_height="wrap_content"
         android:gravity="center|left"
         android:text="Practice rate: "
-        android:textSize="20dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline6"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -85,11 +85,11 @@
         android:layout_height="wrap_content"
         android:gravity="center|left"
         android:text="Difficulty rate: "
-        android:textSize="20dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.975"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -100,14 +100,14 @@
         android:layout_marginTop="8dp"
         android:gravity="center|left"
         android:text="Subject Description:"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.176" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
         android:id="@+id/subject_describe"
@@ -119,9 +119,9 @@
         android:text="This subject is intended to introduce graduate students to machine learning though a mixture of theoretical methods and hands-on practical experience in applying those methods to real-world problems."
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.361"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -133,9 +133,9 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.144"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
         app:layout_constraintVertical_bias="0.564" />
 
@@ -144,9 +144,9 @@
         android:layout_width="340dp"
         android:layout_height="223dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.157" />
 
@@ -157,9 +157,9 @@
         android:text="Rate"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.952"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
         app:layout_constraintVertical_bias="0.567" />
 
@@ -231,6 +231,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.33" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.01946472" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96836984" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

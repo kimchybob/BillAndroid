@@ -2,12 +2,22 @@ package com.example.unimelborientation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.unimelborientation.util.HttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+
+import java.util.Arrays;
+
+import cz.msebera.android.httpclient.Header;
 
 public class RatePage extends AppCompatActivity {
     private RatingBar ratingBar_Theory;
@@ -22,6 +32,11 @@ public class RatePage extends AppCompatActivity {
         setContentView(R.layout.activity_rate_page);
 
         subject_name = getIntent().getStringExtra("subjectname");
+
+        TextView subtitle = findViewById(R.id.rate_page_head);
+        subtitle.setText(subject_name);
+
+        EditText com = findViewById(R.id.rate_edit_text);
 
         ratingBar_Theory = findViewById(R.id.Theory_rate_bar);
         ratingBar_Theory.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -51,13 +66,38 @@ public class RatePage extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RatePage.this, "Submit successfully!", Toast.LENGTH_SHORT).show();
-                // TODO post data to backend
+
+                float practiscore = ratingBar_Practice.getRating();
+                float theoryscore = ratingBar_Theory.getRating();
+                float diffiscore = ratingBar_Difficulty.getRating();
+                Integer subjid = 1; // TODO use the real id
+                Integer comuid = 1; // TODO use the real id
+                String comment = com.getText().toString();
+
+                RequestParams params = new RequestParams();
+                params.put("subjid", subjid);
+                params.put("practisocre", practiscore);
+                params.put("theoryscore", theoryscore);
+                params.put("diffiscore", diffiscore);
+                params.put("comment", comment);
+                params.put("comuid", comuid);
+                System.out.println(params);
+                HttpClient.post("/subject/setSubjComment", params, new TextHttpResponseHandler(){
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Toast.makeText(RatePage.this, "Submit fail!", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        Toast.makeText(RatePage.this, "Submit successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
-        TextView subtitle = findViewById(R.id.rate_page_head);
-        subtitle.setText(subject_name);
+
     }
 
 }
