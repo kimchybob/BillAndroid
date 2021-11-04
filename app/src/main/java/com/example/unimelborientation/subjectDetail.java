@@ -50,6 +50,7 @@ public class subjectDetail extends AppCompatActivity {
 
         subjectCode = getIntent().getStringExtra("subjectCode");
         String sid = getIntent().getStringExtra("sid");
+        setContentView(R.layout.activity_subject_detail);
 
         HttpClient.get("subject/getCommentBySubId/" + sid, null, new JsonHttpResponseHandler(){
                     @Override
@@ -63,6 +64,10 @@ public class subjectDetail extends AppCompatActivity {
                                 comment_list[i] = list.getString("comment");
                             }
                             commentdata = comment_list;
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(subjectDetail.this,
+                                    android.R.layout.simple_list_item_1, commentdata);
+                            ListView listView = (ListView) findViewById(R.id.Comment_list);
+                            listView.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -89,13 +94,6 @@ public class subjectDetail extends AppCompatActivity {
                     sub_description = subject.getDescrip();
 
 
-
-
-                    setContentView(R.layout.activity_subject_detail);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(subjectDetail.this,
-                            android.R.layout.simple_list_item_1, commentdata);
-                    ListView listView = (ListView) findViewById(R.id.Comment_list);
-                    listView.setAdapter(adapter);
                     TextView title = findViewById(R.id.subject_title);
                     title.setText(subject_name);
                     TextView code = findViewById(R.id.subject_code);
@@ -159,10 +157,6 @@ public class subjectDetail extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
-            case R.id.rate_item:
-                Intent intent_rate = new Intent(subjectDetail.this, RatePage.class);
-                startActivity(intent_rate);
-                break;
             case R.id.Address_item:
                 int sid = subject.getSid();
                 Intent intent_address = new Intent(subjectDetail.this, AddressActivity.class); // TODO jump to map page
