@@ -63,6 +63,7 @@ public class SubjectFragment extends Fragment {
     private int menuIndex = 0;
     private String currentCourse = "Master of Information Technology", currentSort, currentTrend;
     private String uid = "1";
+    private Map<String, String> trendMap= new HashMap<>();
 
 
 
@@ -155,7 +156,9 @@ public class SubjectFragment extends Fragment {
                     Toast.makeText(getContext(), currentTrend, Toast.LENGTH_SHORT).show();
                     Context context = getContext();
                     Intent intent = new Intent(context, subjectDetail.class); //jump to @'s activity
-                    intent.putExtra("subjectCode", currentTrend); //todo name
+                    intent.putExtra("subjectCode", currentTrend);
+                    intent.putExtra("sid", trendMap.get(currentTrend));
+                    //todo name
                     context.startActivity(intent);
                 }
             }
@@ -248,8 +251,10 @@ public class SubjectFragment extends Fragment {
                             Map<String, String> map;
                             for (int index = 0; index < data.length(); index++) {
                                 map = new HashMap<String, String>();
-                                map.put("name", new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class).getSubjcode());
+                                Subject subject = new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class);
+                                map.put("name", subject.getSubjcode());
                                 trendWindowData.add(map);
+                                trendMap.put(subject.getSubjcode(), String.valueOf(subject.getSid()));
                             }
                             binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
                             trendMenuAdapter = new SimpleAdapter(getContext(), trendWindowData,
