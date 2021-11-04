@@ -38,7 +38,7 @@ public interface MarkrecordMapper {
      */
     Markrecord selectByPrimaryKey(Integer rid);
 
-    @Select("select * from markrecord where subjID=#{sid} order by lasttime")
+    @Select("select * from markrecord where subjID=#{sid} order by lasttime desc")
     List<Markrecord> selectBySubjId(Integer sid);
 
     /**
