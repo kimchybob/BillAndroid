@@ -82,11 +82,11 @@ public class RatePage extends AppCompatActivity {
                 params.put("comment", comment);
                 params.put("comuid", comuid);
                 System.out.println(params);
-                HttpClient.post("/subject/setSubjComment", params, new TextHttpResponseHandler(){
+                HttpClient.post("subject/setSubjComment", params, new TextHttpResponseHandler(){
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                         Toast.makeText(RatePage.this, "Submit fail!", Toast.LENGTH_SHORT).show();
-
+                        System.out.println(responseString);
                     }
 
                     @Override
