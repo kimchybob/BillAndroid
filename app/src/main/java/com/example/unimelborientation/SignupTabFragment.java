@@ -17,8 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.unimelborientation.util.HttpClient;
+import com.example.unimelborientation.util.SharedPreferencesUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -28,6 +33,7 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
     private Button signup;
     private float v = 0;
     private ProgressBar pb;
+    private SharedPreferencesUtils local_setting;
 
     @Nullable
     @Override
@@ -106,7 +112,7 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
         showToast("Attempt to signup...");
         System.out.println(getAccount());
         //todo signup api
-        HttpClient.post("api/signup", params, new TextHttpResponseHandler() {
+        HttpClient.post("api/signup", params, new JsonHttpResponseHandler(){
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 pb.setVisibility(View.GONE);
@@ -116,14 +122,28 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 pb.setVisibility(View.GONE);
-                if (responseString.equals("\"Successfully signup!\"")){
-                    showToast(responseString);
+                String msg = null;
+                try {
+                    msg = (String) response.get("msg");
+                    System.out.println(msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (msg.equals("Successfully signup!")){
+                    showToast(msg);
+                    local_setting = new SharedPreferencesUtils(getContext(), "setting");
+                    local_setting.putValues(
+                            new SharedPreferencesUtils.ContentValue("rememberPassword", true),
+                            new SharedPreferencesUtils.ContentValue("name", getAccount()),
+                            new SharedPreferencesUtils.ContentValue("password", getPassword())
+                    );
+
                     startActivity(new Intent(getContext(), UniLoginActivity.class));
                     getActivity().finish();
                 }else{
-                    showToast(responseString);
+                    showToast(msg);
                 }
 
             }
