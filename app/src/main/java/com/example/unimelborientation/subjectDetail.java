@@ -145,9 +145,10 @@ public class subjectDetail extends AppCompatActivity {
                 startActivity(intent_rate);
                 break;
             case R.id.Address_item:
-                String location = "-37.798475,144.959358";
-                Intent intent_address = new Intent(subjectDetail.this, FindRouteActivity.class); // TODO jump to map page
-                intent_address.putExtra("location",location);
+                int sid = subject.getSid();
+                Intent intent_address = new Intent(subjectDetail.this, AddressActivity.class); // TODO jump to map page
+                intent_address.putExtra("sid",sid);
+                intent_address.putExtra("subject",subject_name);
                 startActivity(intent_address);
                 break;
             default:

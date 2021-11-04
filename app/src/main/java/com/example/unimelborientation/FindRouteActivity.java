@@ -44,6 +44,7 @@ public class FindRouteActivity extends FragmentActivity implements OnMapReadyCal
 
     //google map object
     private GoogleMap mMap;
+    private String destination;
 
     //current and destination location objects
     Location myLocation = null;
@@ -62,7 +63,8 @@ public class FindRouteActivity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_route);
-        String[] latlng = getIntent().getStringExtra("location").split(",");
+        String[] latlng = getIntent().getStringExtra("latlng").split(",");
+        destination = getIntent().getStringExtra("destination");
         double lat = Double.parseDouble(latlng[0]);
         double lng = Double.parseDouble(latlng[1]);
         end = new LatLng(lat,lng);
@@ -161,7 +163,7 @@ public class FindRouteActivity extends FragmentActivity implements OnMapReadyCal
     {
         mMap.clear();
         if(Start==null || End==null) {
-            Toast.makeText(FindRouteActivity.this,"Unable to get location",Toast.LENGTH_LONG).show();
+//            Toast.makeText(FindRouteActivity.this,"Unable to get location",Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -187,7 +189,7 @@ public class FindRouteActivity extends FragmentActivity implements OnMapReadyCal
 
     @Override
     public void onRoutingStart() {
-        Toast.makeText(FindRouteActivity.this,"Finding Route...",Toast.LENGTH_LONG).show();
+//        Toast.makeText(FindRouteActivity.this,"Finding Route...",Toast.LENGTH_LONG).show();
     }
 
     //If Route finding success..
@@ -235,7 +237,7 @@ public class FindRouteActivity extends FragmentActivity implements OnMapReadyCal
         //Add Marker on route ending position
         MarkerOptions endMarker = new MarkerOptions();
         endMarker.position(polylineEndLatLng);
-        endMarker.title("Destination");
+        endMarker.title(destination);
         mMap.addMarker(endMarker);
     }
 
