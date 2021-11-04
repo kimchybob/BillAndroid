@@ -15,9 +15,14 @@ import com.example.unimelborientation.util.HttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class RatePage extends AppCompatActivity {
     private RatingBar ratingBar_Theory;
@@ -74,15 +79,21 @@ public class RatePage extends AppCompatActivity {
                 Integer comuid = 1; // TODO use the real id
                 String comment = com.getText().toString();
 
-                RequestParams params = new RequestParams();
-                params.put("subjid", subjid);
-                params.put("practisocre", practiscore);
-                params.put("theoryscore", theoryscore);
-                params.put("diffiscore", diffiscore);
-                params.put("comment", comment);
-                params.put("comuid", comuid);
-                System.out.println(params);
-                HttpClient.post("/subject/setSubjComment", params, new TextHttpResponseHandler(){
+                JSONObject params = new JSONObject();
+
+                StringEntity entity = null;
+                try {
+                    params.put("subjid", subjid);
+                    params.put("practisocre", practiscore);
+                    params.put("theoryscore", theoryscore);
+                    params.put("diffiscore", diffiscore);
+                    params.put("comment", comment);
+                    params.put("comuid", comuid);
+                    entity = new StringEntity(params.toString());
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
+                HttpClient.post("subject/setSubjComment", entity, "application/json", new TextHttpResponseHandler(){
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                         Toast.makeText(RatePage.this, "Submit fail!", Toast.LENGTH_SHORT).show();
