@@ -219,10 +219,10 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         login.setClickable(false);
 
         RequestParams params = new RequestParams();
-        params.put("username", getAccount());
+        params.put("uname", getAccount());
         params.put("password", getPassword());
         showToast("Attempt to login...");
-        HttpClient.post("api/login", params, new TextHttpResponseHandler() {
+        HttpClient.post("user/login", params, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 showToast("Invalid username or password.");
@@ -232,40 +232,29 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                if (responseString.equals("\"Successfully login!\"")) {
-                    saveCheckBoxState();
-                    showToast("Successfully login!");
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.get("code").equals("0")) {
+                        saveCheckBoxState();
+                        showToast("Successfully login!");
+                        local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", response.getJSONObject("data").get("uid")));
+//                        String myToken = headers[3].getElements()[0].toString();
+//                        System.out.println(myToken);
+//                        HttpClient.authorization(myToken);
 
-                    String myToken = headers[3].getElements()[0].toString();
-                    System.out.println(myToken);
-                    HttpClient.authorization(myToken);
-//TODo jump main?
-                    RequestParams localparams = new RequestParams();
-                    localparams.put("username", getAccount());
-                    HttpClient.get("getUidByUsername", localparams, new JsonHttpResponseHandler(){
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            System.out.println(response);
-                            try {
-                                local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", response.get("data")));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+                        startActivity(new Intent(getContext(), MainActivity.class));
+                        getActivity().finish();
+                        login.setClickable(true);
+                        pb.setVisibility(View.GONE);
 
-
-                    startActivity(new Intent(getContext(), MainActivity.class));
-                    getActivity().finish();
-                    login.setClickable(true);
-                    pb.setVisibility(View.GONE);
-
-                } else {
-                    System.out.println(responseString);
-                    showToast(responseString);
-                    login.setClickable(true);
-                    pb.setVisibility(View.GONE);
+                    } else {
+                        System.out.println(response);
+                        showToast(response.toString());
+                        login.setClickable(true);
+                        pb.setVisibility(View.GONE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
