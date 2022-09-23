@@ -242,6 +242,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
 //                        System.out.println(myToken);
 //                        HttpClient.authorization(myToken);
 
+                        System.out.println("hello world");
                         startActivity(new Intent(getContext(), MainActivity.class));
                         getActivity().finish();
                         login.setClickable(true);
