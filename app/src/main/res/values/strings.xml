@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Unimelb Orientation</string>
+    <string name="app_name">EzbillVisionD</string>
     <string name="account">account/username</string>
     <string name="password">password</string>
     <string name="check_password">Remember Me</string>
@@ -35,5 +35,5 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="unimelb_motto">Postera Crescam Laude.</string>
+    <string name="unimelb_motto">Welcome to EzbillVision.</string>
 </resources>
