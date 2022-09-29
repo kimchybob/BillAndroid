@@ -4,11 +4,15 @@
     <item
         android:id="@+id/subjectFragment"
         android:icon="@drawable/ic_baseline_school"
-        android:title="@string/subjects" />
+        android:title="@string/bills" />
     <item
         android:id="@+id/mapFragment"
         android:icon="@drawable/ic_baseline_my_location"
-        android:title="@string/unimap" />
+        android:title="@string/Picture" />
+    <item
+        android:id="@+id/myProfile"
+        android:icon="@drawable/progress_ring_uniblue"
+        android:title="@string/Profile" />
 <!--    <item-->
 <!--        android:id="@+id/myHomeFragment"-->
 <!--        android:icon="@drawable/ic_baseline_emoji_people"-->
