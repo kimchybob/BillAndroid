@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.unimelborientation.type.Bill;
 import com.example.unimelborientation.type.Subject;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
     List<Subject> curSubjectsList;
     List<Subject> subjectsListAll;
+
 
     public RecyclerAdapter(List<Subject> curSubjectsList) {
         this.curSubjectsList = curSubjectsList;
