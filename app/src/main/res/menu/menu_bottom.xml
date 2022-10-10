@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/subjectFragment"
+        android:id="@+id/billFragment"
         android:icon="@drawable/ic_baseline_school"
         android:title="@string/bills" />
     <item
