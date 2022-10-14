@@ -8,10 +8,10 @@ public class Bill {
     int bId;
     String bill;
     String uname;
-    float expense;
+    int expense;
     String date;
 
-    public Bill(int bId, String bill, String uname, float expense, String date) {
+    public Bill(int bId, String bill, String uname, int expense, String date) {
         this.bId = bId;
         this.bill = bill;
         this.uname = uname;
