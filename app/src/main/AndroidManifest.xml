@@ -35,9 +35,6 @@
             android:name=".FindRouteActivity"
             android:exported="true" />
         <activity
-            android:name=".subjectDetail"
-            android:exported="true" />
-        <activity
             android:name=".MainActivity"
             android:exported="true" /> <!-- <activity android:name=".MapFragment" -->
         <!-- android:exported="true" /> -->

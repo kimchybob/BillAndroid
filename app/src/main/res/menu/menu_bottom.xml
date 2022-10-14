@@ -10,7 +10,7 @@
         android:icon="@drawable/ic_baseline_my_location"
         android:title="@string/Picture" />
     <item
-        android:id="@+id/myProfile"
+        android:id="@+id/profileFragme"
         android:icon="@drawable/progress_ring_uniblue"
         android:title="@string/Profile" />
 <!--    <item-->

@@ -16,10 +16,10 @@
         android:label="UniMap"
         tools:layout="@layout/map_fragment" />
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.unimelborientation.ProfileFragment"
-        android:label="UniMap"
-        tools:layout="@layout/profile_fragment" />
+        android:id="@+id/profileFragme"
+        android:name="com.example.unimelborientation.ProfileFragme"
+        android:label="@string/Profile"
+        tools:layout="@layout/profile1_fragment" />
     <!--    <fragment-->
 <!--        android:id="@+id/myHomeFragment"-->
 <!--        android:name="com.example.unimelborientation.MyHomeFragment"-->
