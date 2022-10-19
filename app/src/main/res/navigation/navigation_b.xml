@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_b"
-    app:startDestination="@id/mapFragment">
+    app:startDestination="@id/GraphFragment">
 
     <fragment
         android:id="@+id/billFragment"
@@ -11,10 +11,10 @@
         android:label="Subjects"
         tools:layout="@layout/bill_fragment" />
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.unimelborientation.MapFragment"
+        android:id="@+id/GraphFragment"
+        android:name="com.example.unimelborientation.GraphFragment"
         android:label="UniMap"
-        tools:layout="@layout/map_fragment" />
+        tools:layout="@layout/graph_fragment" />
     <fragment
         android:id="@+id/profileFragme"
         android:name="com.example.unimelborientation.ProfileFragme"

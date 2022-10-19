@@ -6,9 +6,9 @@
         android:icon="@drawable/ic_baseline_school"
         android:title="@string/bills" />
     <item
-        android:id="@+id/mapFragment"
+        android:id="@+id/GraphFragment"
         android:icon="@drawable/ic_baseline_my_location"
-        android:title="@string/Picture" />
+        android:title="Graph" />
     <item
         android:id="@+id/profileFragme"
         android:icon="@drawable/progress_ring_uniblue"
