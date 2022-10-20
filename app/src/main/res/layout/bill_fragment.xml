@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SubjectFragment"
+        tools:context=".BillFragment"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -87,11 +87,11 @@
                     android:text="@string/Course"
                     android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/arrow_down_desc"
-                    android:src="@mipmap/icon_arrow_down" />
+<!--                <ImageView-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:contentDescription="@string/arrow_down_desc"-->
+<!--                    android:src="@drawable/icon_arrow_down" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -110,11 +110,11 @@
                     android:text="@string/Sort"
                     android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/arrow_down_desc"
-                    android:src="@mipmap/icon_arrow_down" />
+<!--                <ImageView-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:contentDescription="@string/arrow_down_desc"-->
+<!--                    android:src="@drawable/icon_arrow_down" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -133,11 +133,11 @@
                     android:text="@string/Trend"
                     android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/arrow_down_desc"
-                    android:src="@mipmap/icon_arrow_down" />
+<!--                <ImageView-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:contentDescription="@string/arrow_down_desc"-->
+<!--                    android:src="@drawable/icon_arrow_down" />-->
             </LinearLayout>
         </LinearLayout>
         <View
