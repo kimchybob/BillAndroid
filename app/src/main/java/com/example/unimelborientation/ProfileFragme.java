@@ -32,12 +32,14 @@ import com.example.unimelborientation.databinding.BillFragmentBinding;
 import com.example.unimelborientation.type.Bill;
 import com.example.unimelborientation.type.Subject;
 import com.example.unimelborientation.util.HttpClient;
+import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,11 +77,7 @@ public class ProfileFragme extends Fragment {
 
         Intent intent = getActivity().getIntent();
         email = intent.getStringExtra("email");
-
-        realname.setText("Qingying Zhao");
-        username.setText("Chloe");
-        emailtext.setText("710870305@qq.com");
-        mobile.setText("0404282847");
+        initProfileData();
 
         touxiang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +126,45 @@ public class ProfileFragme extends Fragment {
 
     }
 
+    private void initProfileData() {
+        realname.setText("");
+        RequestParams params = new RequestParams();
+        SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
+        params.put("uid",local_setting.getInt("uid"));
+        HttpClient.get("user/getUser",params,new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                showToast(responseString);
+            }
 
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.get("code").equals("0")) {
+                        JSONObject user = response.getJSONObject("data");
+                        username.setText((String)user.get("uname"));
+                        emailtext.setText((String)user.get("email"));
+                        mobile.setText((String)user.get("phone"));
+                    } else {
+                        System.out.println(response);
+                        showToast(response.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
+    public void showToast(String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
