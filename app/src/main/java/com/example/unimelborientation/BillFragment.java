@@ -70,6 +70,7 @@ public class BillFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = BillFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+//        View view = inflater.inflate(R.layout.bill_fragment,container,false);
         initBillsData();
         initPopWindowData();
         initFuncBarView();
@@ -293,7 +294,7 @@ public class BillFragment extends Fragment {
         RequestParams params = new RequestParams();
         SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
         params.put("uid",local_setting.getInt("uid"));
-        HttpClient.get("bill/searchAllBill",params,new JsonHttpResponseHandler() {
+        HttpClient.get("bill/searchTenantAllBill",params,new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 showToast(responseString);
@@ -376,27 +377,27 @@ public class BillFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        // TODO Add your menu entries here
-        if (getActivity() != null) {
-            getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
-        }
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                recyclerAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        // TODO Add your menu entries here
+//        if (getActivity() != null) {
+//            getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
+//        }
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) item.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                recyclerAdapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
 }
