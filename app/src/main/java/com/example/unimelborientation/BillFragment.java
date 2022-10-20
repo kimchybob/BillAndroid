@@ -32,10 +32,8 @@ import com.example.unimelborientation.databinding.SubjectFragmentBinding;
 import com.example.unimelborientation.type.Bill;
 import com.example.unimelborientation.type.Subject;
 import com.example.unimelborientation.util.HttpClient;
-import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +46,7 @@ import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
-public class BillFragment extends Fragment {
+public class BillFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private BillViewModel myViewModel;
     RecyclerBillAdapter recyclerAdapter;
@@ -70,6 +68,7 @@ public class BillFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = BillFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+//        View view = inflater.inflate(R.layout.bill_fragment,container,false);
         initBillsData();
         initPopWindowData();
         initFuncBarView();
@@ -278,50 +277,13 @@ public class BillFragment extends Fragment {
         });
     }
 
-    public void showToast(String msg) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
     //faked data for test
     private void initBillsData() {
-        RequestParams params = new RequestParams();
-        SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
-        params.put("uid",local_setting.getInt("uid"));
-        HttpClient.get("bill/searchAllBill",params,new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                showToast(responseString);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.get("code").equals("0")) {
-                        JSONArray bill = response.getJSONArray("data");
-                        for(int i =0;i<bill.length();i++){
-                            JSONObject item = bill.getJSONObject(i);
-                            billsList.add(new Bill(item.getInt("bid"),"",item.getString("uname"),item.getInt("expense"),item.getString("time")));
-                        }
-//                        save to local cache if it is neseccery
-//                        local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", response.getJSONObject("data").get("uid")));
-                        initRecyclerView();
-                        binding.progress.setVisibility(View.GONE);
-
-                    } else {
-                        System.out.println(response);
-                        showToast(response.toString());
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        for faking data purpose
+        billsList.add(new Bill(1,"electric","kimchy",80,"04/10/2022"));
+        billsList.add(new Bill(1,"electric","kimchy",26,"05/10/2022"));
+        initRecyclerView();
+        binding.progress.setVisibility(View.GONE);
 
 //        TODO: enable this code to load data dynamically
 //
@@ -399,4 +361,13 @@ public class BillFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }
