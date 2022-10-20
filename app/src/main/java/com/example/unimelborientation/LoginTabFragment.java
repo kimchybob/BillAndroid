@@ -227,13 +227,14 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         params.put("password", getPassword());
         showToast("Attempt to login...");
         HttpClient.post("user/login", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                showToast("Invalid username or password.");
-                login.setClickable(true);
-                pb.setVisibility(View.GONE);
 
-            }
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                showToast("Invalid username or password.");
+//                login.setClickable(true);
+//                pb.setVisibility(View.GONE);
+//            }
+
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -255,10 +256,22 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
                         pb.setVisibility(View.GONE);
                     }
                 } catch (JSONException e) {
+                    System.out.println("hello world");
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse);
+
+                showToast("bad network, try again");
+                login.setClickable(true);
+                pb.setVisibility(View.GONE);
+            }
         });
+
+
     }
 
     public void showToast(String msg) {
