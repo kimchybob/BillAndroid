@@ -13,13 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.unimelborientation.type.Bill;
 import com.example.unimelborientation.util.HttpClient;
+import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +40,7 @@ public class GraphFragment extends Fragment  {
 //    float[] x={3,7,5,9,8,10,3,23,10,2};
 
     private List<Float> u = new ArrayList<>();
-
+    private List<String> labels = new ArrayList<>();
 
 
     public static GraphFragment newInstance() {
@@ -49,13 +52,7 @@ public class GraphFragment extends Fragment  {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.graph_fragment, container, false);
         barChart = (BarChart) view.findViewById(R.id.bar_charthome);
-        u.add(10.0F);
-        u.add(5.0F);
-        u.add(7.0F);
-        u.add(9.0F);
-        u.add(2.0F);
-        float[] m = new float[u.size()];
-        showhodleBarChart();
+        initChartData();
 
 
 //        for(int i=0;i<x.length;i++){
@@ -71,6 +68,50 @@ public class GraphFragment extends Fragment  {
 
         setXAxis();
         return view;
+    }
+
+    private void initChartData() {
+        RequestParams params = new RequestParams();
+        SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
+        params.put("uid",local_setting.getInt("uid"));
+        HttpClient.get("bill/searchPast",params,new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                showToast(responseString);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.get("code").equals("0")) {
+                        JSONArray bill = response.getJSONArray("data");
+                        for(int i =0;i<bill.length();i++){
+                            JSONObject item = bill.getJSONObject(i);
+                            float output = (float) item.getInt("expense");
+                            labels.add(item.getString("time"));
+                            u.add(output);
+                        }
+                        float[] m = new float[u.size()];
+                        showhodleBarChart();
+                    } else {
+                        System.out.println(response);
+                        showToast(response.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void showToast(String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -109,9 +150,9 @@ public class GraphFragment extends Fragment  {
 //                        return "Day" + " " + (i + 1);
 //                    }
 //                }
-                for(int i=0;i<u.size();i++) {
+                for(int i=0;i<labels.size();i++) {
                     if (value == i) {
-                        return "Day" + " " + (i + 1);
+                        return labels.get(i).substring(5);
                     }
                 }
 
