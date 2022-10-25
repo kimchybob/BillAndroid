@@ -29,7 +29,7 @@ public class MapFragment extends Fragment implements AdapterView.OnItemSelectedL
     GoogleMap mMap;
     private Button location;
     private Spinner spinner;
-    LatLng center = new LatLng(-37.79834,144.960973);
+    LatLng center = new LatLng(-34.9206,138.6062);
     LatLng baillieu = new LatLng(-37.798475,144.959358);
     LatLng oldEngineering = new LatLng(-37.799476,144.961478);
     LatLng giblinEunson = new LatLng(-37.801231,144.95946);
