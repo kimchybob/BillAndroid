@@ -8,7 +8,7 @@ import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class HttpClient {
-    private static final String BASE_URL = "http://192.168.137.104:8081/";
+    private static final String BASE_URL = "http://192.168.0.13:8081/";
 
 //            "http://10.0.2.2:8082/"; //Todo
 
