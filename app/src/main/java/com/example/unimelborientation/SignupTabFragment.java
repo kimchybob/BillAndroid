@@ -1,9 +1,22 @@
 package com.example.unimelborientation;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +62,15 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();//严格模式，虚拟机政策，构建器
+
+        StrictMode.setVmPolicy(builder.build());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//构建器SDK版本大于或等于构建器代码版本
+
+            builder.detectFileUriExposure();//构建器就侦察出FileUriExposure
+
+        }
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tab_frag, container, false);
         initViews(root);
         return root;
@@ -92,40 +115,65 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
             signup();
         }
         if(view.getId() == R.id.selfie_btn) {
-             Intent intent = new Intent();
-             intent.putExtra("camerasensortype",2);
-             intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+             //intent.putExtra("camerasensortype",1);
+            String photofileName = "IMG_mySelfie.jpg";
+
+            String imgUrl = Environment.getExternalStorageDirectory() + File.separator + "testImage"+ File.separator + photofileName;//必须使用已经存在的文件夹tempWhy
+            Log.i("selenium", imgUrl);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(imgUrl)));
+
+//启动拍照的窗体。并注册 回调处理
+             //intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
              startActivityForResult(intent, 1);
-        }
+        }//现在的问题是缩略图data上传或者用指定路径找到原图。
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            Bundle bundle = data.getExtras();
-// 获取相机返回的数据，并转换为Bitmap图片格式
-            Bitmap bitmap = (Bitmap) bundle.get("data");
-            FileOutputStream b = null;
-            File file = new File("/storage/testImage");
-            if (!file.exists())
-                file.mkdirs();
-            try {
-                b = new FileOutputStream("/storage/testImage/mySelfie.jpg");
-// 把数据写入文件
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    b.flush();
-                    b.close();
-                    b = null;
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (resultCode == Activity.RESULT_OK) {Log.i("selenium", "1112222222222111111");
+            if(data !=null){ //可能尚未指定intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                //返回有缩略图
+                Log.i("selenium", "111111111111111");
+                if(data.hasExtra("data")) {
+                    Bitmap thumbnail = data.getParcelableExtra("data");
+                    imagePreview.setImageBitmap(thumbnail);
                 }
+            }else{
+                Log.i("selenium", "系统相机拍照完成，resultCode="+resultCode);
+                String imgUrl = Environment.getExternalStorageDirectory() + File.separator + "testImage"+ File.separator + "IMG_mySelfie.jpg";
+                Bitmap bitmap = BitmapFactory.decodeFile(imgUrl);
+// 把数据写入文件
+                imagePreview.setImageBitmap(bitmap);
+                Log.i("selenium","成功读取图片");
+
+//                String photoPath = getRealPathFromUri(this.getActivity(), uri);
+//// 获取相机返回的数据，并转换为Bitmap图片格式
+//                FileOutputStream b = null;
+//                File file = new File(photoPath);
+//                if (!file.exists())
+//                {Log.i("selenium","创建文件");file.mkdirs();Log.i("selenium","成功创建文件");}
+//                try {
+//                    b = new FileOutputStream("/storage/testImage/IMG_mySelfie.jpg");
+//// 把数据写入文件
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
+//                    Log.i("selenium","成功保存图片");
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                } finally {
+//                    try {
+//                        b.flush();
+//                        b.close();
+//                        b = null;Log.i("selenium","清空缓存流，关闭");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                Log.i("selenium","创建文件");
+//                imagePreview.setImageBitmap(bitmap);
+//
             }
-            imagePreview.setImageBitmap(bitmap);
         }
     }
 
