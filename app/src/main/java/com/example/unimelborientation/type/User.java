@@ -5,12 +5,32 @@ public class User {
     private String uname;
     private String email;
     private String mobile;
+    private int unit;
+    private String landlord;
 
-    public User(String uid, String uname, String email, String mobile) {
+    public int getUnit() {
+        return unit;
+    }
+
+    public void setUnit(int unit) {
+        this.unit = unit;
+    }
+
+    public String getLandlord() {
+        return landlord;
+    }
+
+    public void setLandlord(String landlord) {
+        this.landlord = landlord;
+    }
+
+    public User(String uid, String uname, String email, String mobile, int unit, String landlord) {
         this.uid = uid;
         this.uname = uname;
         this.email = email;
         this.mobile = mobile;
+        this.unit = unit;
+        this.landlord = landlord;
     }
 
     public String getUid() {

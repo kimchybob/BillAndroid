@@ -4,7 +4,6 @@ import android.os.Looper;
 
 import com.loopj.android.http.*;
 
-import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class HttpClient {
@@ -24,8 +23,8 @@ public class HttpClient {
         myClient.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
-    public static void post(String url, StringEntity entity, String contentType, AsyncHttpResponseHandler responseHandler) {
-        myClient.post(null, getAbsoluteUrl(url), entity, contentType, responseHandler );
+    public static void post(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler) {
+        myClient.post(null, getAbsoluteUrl(url), entity, "application/json", responseHandler );
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

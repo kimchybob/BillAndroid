@@ -88,40 +88,6 @@ public class ProfileFragme extends Fragment {
             }
         });
 
-
-        //------------------------------------------------------------
-        HttpClient.get("api/signup", null, new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JSONArray data = (JSONArray) response.get("data");
-                    for (int i =0; i<data.length(); i++){
-                        JSONObject item = data.getJSONObject(i);
-                        if(item.getString("name").equals("...")){
-                            realname.setText(item.getString("name"));
-                        }
-                        else if(item.getString("type").equals("lab")){
-
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("getTrend", "onFailure: "+ responseString);
-                Toast.makeText(getContext(),
-                        responseString,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        //------------------------------------------------------------
-
         return view;
 
     }
