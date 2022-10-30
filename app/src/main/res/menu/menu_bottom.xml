@@ -8,7 +8,11 @@
     <item
         android:id="@+id/GraphFragment"
         android:icon="@drawable/ic_baseline_my_location"
-        android:title="Graph" />
+        android:title="Bar Graph" />
+    <item
+        android:id="@+id/pie_chart"
+        android:icon="@drawable/ic_baseline_my_location"
+        android:title="Pie Graph" />
     <item
         android:id="@+id/profileFragme"
         android:icon="@drawable/progress_ring_uniblue"

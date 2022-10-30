@@ -16,6 +16,11 @@
         android:label="UniMap"
         tools:layout="@layout/graph_fragment" />
     <fragment
+        android:id="@+id/pie_chart"
+        android:name="com.example.unimelborientation.PieFragment"
+        android:label="UniMap"
+        tools:layout="@layout/pie_fragment" />
+    <fragment
         android:id="@+id/profileFragme"
         android:name="com.example.unimelborientation.ProfileFragme"
         android:label="@string/Profile"
