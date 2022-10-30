@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EzbillVisionD</string>
     <string name="landlord">I am landlord</string>
+    <string name="showAll">Show All</string>
     <string name="account">account/username</string>
     <string name="password">password</string>
     <string name="check_password">Remember Me</string>

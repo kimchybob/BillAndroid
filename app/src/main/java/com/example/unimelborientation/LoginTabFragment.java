@@ -219,6 +219,8 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         login.setClickable(false);
         if(getAccount().equals("admin") && getPassword().equals("123456")){
             startMain();
+            local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", 0));
+            local_setting.putValues(new SharedPreferencesUtils.ContentValue("landlord", 0));
             return;
         }
 
@@ -228,13 +230,6 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         showToast("Attempt to login...");
         HttpClient.post("user/login", params, new JsonHttpResponseHandler() {
 
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                showToast("Invalid username or password.");
-//                login.setClickable(true);
-//                pb.setVisibility(View.GONE);
-//            }
-
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -243,6 +238,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
                         saveCheckBoxState();
                         showToast("Successfully login!");
                         local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", response.getJSONObject("data").get("uid")));
+                        local_setting.putValues(new SharedPreferencesUtils.ContentValue("landlord", response.getJSONObject("data").get("landlord")));
 //                        String myToken = headers[3].getElements()[0].toString();
 //                        System.out.println(myToken);
 //                        HttpClient.authorization(myToken);

@@ -13,10 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,17 +55,18 @@ public class BillFragment extends Fragment {
     private BillViewModel myViewModel;
     RecyclerBillAdapter recyclerAdapter;
     private final List<Bill> billsList = new ArrayList<>();
+    private final List<Bill> landlordBillsList = new ArrayList<>();
     private List<Map<String, String>> courseWindowData, sortWindowData, trendWindowData;
     private BillFragmentBinding binding;
     private PopupWindow popMenu;
+    private CheckBox showAll;
+    private TextView supplier_list_sort_tv;
     private ListView listView, popListView;
-    private SimpleAdapter courseMenuAdapter, sortMenuAdapter, trendMenuAdapter;
+    private SimpleAdapter sortMenuAdapter;
     private int menuIndex = 0;
-    private String currentCourse = "Master of Information Technology", currentSort, currentTrend;
     private String uid = "1";
     private Map<String, String> trendMap= new HashMap<>();
-
-
+    private String currentSort;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -75,6 +78,15 @@ public class BillFragment extends Fragment {
         initPopWindowData();
         initFuncBarView();
         initPopWindowView();
+        binding.showAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(binding.showAll.isChecked()){
+                    if(landlordBillsList.size()==0){ requestAllResult(); }
+                    else{ initRecyclerView();}
+                }else{ initRecyclerView(); }
+            }
+        });
         return view;
     }
 
@@ -89,12 +101,16 @@ public class BillFragment extends Fragment {
         popMenu.setAnimationStyle(R.style.popwin_anim_style);
         popMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             public void onDismiss() {
-                binding.supplierListCourseTv.setTextColor(Color.parseColor("#5a5959"));
+                binding.showAll.setTextColor(Color.parseColor("#5a5959"));
                 binding.supplierListSortTv.setTextColor(Color.parseColor("#5a5959"));
-                binding.supplierListTrendTv.setTextColor(Color.parseColor("#5a5959"));
             }
         });
 
+        SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
+        Boolean isLandlord = local_setting.getInt("landlord")==1;
+        if(!isLandlord){
+            binding.showAll.setVisibility(View.GONE);
+        }
 
         popListView = (ListView) contentView.findViewById(R.id.popwin_supplier_list_lv);
         contentView.findViewById(R.id.popwin_supplier_list_bottom)
@@ -103,94 +119,28 @@ public class BillFragment extends Fragment {
                         popMenu.dismiss();
                     }
                 });
-        courseMenuAdapter = new SimpleAdapter(getContext(), courseWindowData,
-                R.layout.item_listview_pop_win, new String[]{"name"},
-                new int[]{R.id.listview_popwind_tv});
         sortMenuAdapter = new SimpleAdapter(getContext(), sortWindowData,
                 R.layout.item_listview_pop_win, new String[]{"name"},
                 new int[]{R.id.listview_popwind_tv});
-        trendMenuAdapter = new SimpleAdapter(getContext(), trendWindowData,
-                R.layout.item_listview_pop_win, new String[]{"name"},
-                new int[]{R.id.listview_popwind_tv});
 
-//        popListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
-//                                    long arg3) {
-//                popMenu.dismiss();
-//                if (menuIndex == 0) {
-//                    if (currentCourse != null && currentCourse.equals(courseWindowData.get(pos).get("name"))) {
-//                        return;
-//                    }
-//                    currentCourse = courseWindowData.get(pos).get("name");
-//                    binding.progress.setVisibility(View.VISIBLE);
-//                    HttpClient.get("subject/getListByCourse/" + currentCourse, null, new JsonHttpResponseHandler() {
-//
-//                        @Override
-//                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                            ArrayList<Bill> list = new ArrayList<>();
-//                            try {
-//                                System.out.println(response);
-//                                JSONArray data = (JSONArray) response.get("data");
-//
-//                                for (int index = 0; index < data.length(); index++) {
-//                                    list.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class));
-//                                }
-//                                Toast.makeText(getContext(), currentCourse, Toast.LENGTH_SHORT).show();
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }finally {
-//                                recyclerAdapter.syncCurrentSubjects(list);
-//                                binding.progress.setVisibility(View.GONE);
-//                            }
-//                        }
-//                    });
-//                } else if (menuIndex == 1) {
-//                    currentSort = sortWindowData.get(pos).get("name");
-//                    Toast.makeText(getContext(), currentSort, Toast.LENGTH_SHORT).show();
-//                    recyclerAdapter.sort(currentSort);
-//                } else {
-//
-//                    currentTrend = trendWindowData.get(pos).get("name");
-//                    Toast.makeText(getContext(), currentTrend, Toast.LENGTH_SHORT).show();
-//                    Context context = getContext();
-//                    Intent intent = new Intent(context, subjectDetail.class); //jump to @'s activity
-//                    intent.putExtra("subjectCode", currentTrend);
-//                    intent.putExtra("sid", trendMap.get(currentTrend));
-//                    //todo name
-//                    context.startActivity(intent);
-//                }
-//            }
-//        });
-
+        popListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+                                    long arg3) {
+                popMenu.dismiss();
+                currentSort = sortWindowData.get(pos).get("name");
+                Toast.makeText(getContext(), currentSort, Toast.LENGTH_SHORT).show();
+                recyclerAdapter.sort(currentSort);
+            }
+        });
     }
 
     private void initPopWindowData() {
-        courseWindowData = new ArrayList<Map<String, String>>();
-        //Todo get real date
-        String[] menuStr1 = new String[]{"Master of Information Technology",
-                "Master of Information System",
-                "Master of Data Science",
-                "Master of Medicine",
-                "Master of Finance",
-        };
-        Map<String, String> map1;
-        for (String s : menuStr1) {
-            map1 = new HashMap<String, String>();
-            map1.put("name", s);
-            courseWindowData.add(map1);
-        }
-
         sortWindowData = new ArrayList<Map<String, String>>();
         String[] menuStr2 = new String[]{
-                "Subject Name Alphabet Ascending",
-                "Subject Name Alphabet Descending",
-                "Practice Score Ascending",
-                "Practice Score Descending",
-                "Theory Score Ascending",
-                "Theory Score Descending",
-                "Difficulty Score Ascending",
-                "Difficulty Score Descending",
+                "Expenses Ascending",
+                "Expenses Descending",
+                "Date Ascending",
+                "Date Descending",
         };
         Map<String, String> map2;
         for (String s : menuStr2) {
@@ -198,34 +148,9 @@ public class BillFragment extends Fragment {
             map2.put("name", s);
             sortWindowData.add(map2);
         }
-
-        trendWindowData = new ArrayList<Map<String, String>>();
-
-        String[] menuStr3 = new String[]{"COMP90015",
-                "COMP90020",
-                "COMP90055",
-        };
-        Map<String, String> map3;
-        for (String s : menuStr3) {
-            map3 = new HashMap<String, String>();
-            map3.put("name", s);
-            trendWindowData.add(map3);
-        }
     }
 
     private void initFuncBarView() {
-//        binding.supplierListLv;
-//        binding.progress.setVisibility(View.GONE);
-        binding.supplierListCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.supplierListCourseTv.setTextColor(Color.parseColor("#39ac69"));
-                popListView.setAdapter(courseMenuAdapter);
-                popMenu.showAsDropDown(binding.supplierListCourse, 0, 2);
-                menuIndex = 0;
-            }
-        });
-
         binding.supplierListSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,48 +158,6 @@ public class BillFragment extends Fragment {
                 popListView.setAdapter(sortMenuAdapter);
                 popMenu.showAsDropDown(binding.supplierListSort, 0, 2);
                 menuIndex = 1;
-            }
-        });
-
-        binding.supplierListTrend.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Extracting current trends...",Toast.LENGTH_SHORT).show();
-                HttpClient.get("subject/getLastSubjects", null, new JsonHttpResponseHandler(){
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        try {
-                            JSONArray data = (JSONArray) response.get("data");
-                            trendWindowData.clear();
-                            Map<String, String> map;
-                            for (int index = 0; index < data.length(); index++) {
-                                map = new HashMap<String, String>();
-                                Subject subject = new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Subject.class);
-                                map.put("name", subject.getSubjcode());
-                                trendWindowData.add(map);
-                                trendMap.put(subject.getSubjcode(), String.valueOf(subject.getSid()));
-                            }
-                            binding.supplierListTrendTv.setTextColor(Color.parseColor("#39ac69"));
-                            trendMenuAdapter = new SimpleAdapter(getContext(), trendWindowData,
-                                    R.layout.item_listview_pop_win, new String[]{"name"},
-                                    new int[]{R.id.listview_popwind_tv});
-                            popListView.setAdapter(trendMenuAdapter);
-                            popMenu.showAsDropDown(binding.supplierListTrend, 0, 2);
-                            menuIndex = 2;
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        Log.d("getTrend", "onFailure: "+ responseString);
-                        Toast.makeText(getContext(),
-                                responseString,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
     }
@@ -289,11 +172,52 @@ public class BillFragment extends Fragment {
 
     }
 
+    private void requestAllResult(){
+        RequestParams params = new RequestParams();
+        SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
+        int uid = local_setting.getInt("uid");
+        params.put("uid",uid);
+        HttpClient.get("bill/searchLandlordAllBill",params,new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                showToast(responseString);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.get("code").equals("0")) {
+                        JSONArray bill = response.getJSONArray("data");
+                        for(int i =0;i<bill.length();i++){
+                            JSONObject item = bill.getJSONObject(i);
+                            landlordBillsList.add(new Bill(item.getInt("bid"),"",item.getString("uname"),item.getInt("expense"),item.getString("time")));
+                        }
+                        initRecyclerView();
+                        binding.progress.setVisibility(View.GONE);
+
+                    } else {
+                        System.out.println(response);
+                        showToast(response.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     //faked data for test
     private void initBillsData() {
         RequestParams params = new RequestParams();
         SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
-        params.put("uid",local_setting.getInt("uid"));
+        int uid = local_setting.getInt("uid");
+        if(uid==0){
+//            billsList.add(new Bill(1,"bill","kim",80,"2020/10/26",305));
+            initRecyclerView();
+            binding.progress.setVisibility(View.GONE);
+            return;
+        }
+        params.put("uid",uid);
         HttpClient.get("bill/searchTenantAllBill",params,new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -309,8 +233,6 @@ public class BillFragment extends Fragment {
                             JSONObject item = bill.getJSONObject(i);
                             billsList.add(new Bill(item.getInt("bid"),"",item.getString("uname"),item.getInt("expense"),item.getString("time")));
                         }
-//                        save to local cache if it is neseccery
-//                        local_setting.putValues(new SharedPreferencesUtils.ContentValue("uid", response.getJSONObject("data").get("uid")));
                         initRecyclerView();
                         binding.progress.setVisibility(View.GONE);
 
@@ -323,38 +245,11 @@ public class BillFragment extends Fragment {
                 }
             }
         });
-
-//        TODO: enable this code to load data dynamically
-//
-//        HttpClient.get("subject/getListByUid/" + uid, null, new JsonHttpResponseHandler() {
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//
-//                try {
-//                    JSONArray data = (JSONArray) response.get("data");
-//                    for (int index = 0; index < data.length(); index++) {
-//                        billsList.add(new Gson().fromJson(String.valueOf((JSONObject) data.get(index)), Bill.class));
-//                    }
-//                    initRecyclerView();
-//                    binding.progress.setVisibility(View.GONE);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("getList", "onFailure: "+ responseString);
-//            }
-//        });
     }
-    //Todo get real data from our database???
-
 
     private void initRecyclerView() {
 
-        recyclerAdapter = new RecyclerBillAdapter(billsList);
+        recyclerAdapter = new RecyclerBillAdapter(binding.showAll.isChecked()?landlordBillsList:billsList);
         binding.recyclerView.setAdapter(recyclerAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         if (getActivity() != null) {
@@ -376,28 +271,5 @@ public class BillFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        // TODO Add your menu entries here
-//        if (getActivity() != null) {
-//            getActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
-//        }
-//        MenuItem item = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) item.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                recyclerAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
 
 }

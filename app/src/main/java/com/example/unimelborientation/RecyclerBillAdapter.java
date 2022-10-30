@@ -17,10 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.unimelborientation.type.Bill;
 import com.example.unimelborientation.type.Subject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RecyclerBillAdapter extends RecyclerView.Adapter<RecyclerBillAdapter.ViewHolder> implements Filterable {
     List<Bill> curBillsList;
@@ -105,7 +108,66 @@ public class RecyclerBillAdapter extends RecyclerView.Adapter<RecyclerBillAdapte
         notifyDataSetChanged();
     }
 
-
+    @SuppressLint("NotifyDataSetChanged")
+    public void sort(String method){
+        if (method.equals("Expenses Ascending")){
+            Collections.sort(curBillsList, new Comparator<Bill>() {
+                @Override
+                public int compare(Bill o1, Bill o2) {
+                    float res = o1.getExpense() - o2.getExpense();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? 1: -1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Expenses Descending")){
+            Collections.sort(curBillsList, new Comparator<Bill>() {
+                @Override
+                public int compare(Bill o1, Bill o2) {
+                    float res = o1.getExpense() - o2.getExpense();
+                    if (res == 0){
+                        return 0;
+                    }else{
+                        return res>0? -1: 1 ;
+                    }
+                }
+            });
+        }
+        if (method.equals("Date Ascending")){
+            Collections.sort(curBillsList, new Comparator<Bill>() {
+                @Override
+                public int compare(Bill o1, Bill o2) {
+                    try {
+                        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(o1.getDate());
+                        Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(o2.getDate());
+                        return date1.compareTo(date2)>0?1:-1;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return -1;
+                }
+            });
+        }
+        if (method.equals("Date Descending")){
+            Collections.sort(curBillsList, new Comparator<Bill>() {
+                @Override
+                public int compare(Bill o1, Bill o2) {
+                    try {
+                        Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(o1.getDate());
+                        Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(o2.getDate());
+                        return date1.compareTo(date2)>0?-1:1;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return 1;
+                }
+            });
+        }
+        notifyDataSetChanged();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView rowImageView;
