@@ -10,6 +10,16 @@ public class Bill {
     String uname;
     float expense;
     String date;
+    int room;
+
+    public Bill(int bId, String bill, String uname, float expense, String date, int room) {
+        this.bId = bId;
+        this.bill = bill;
+        this.uname = uname;
+        this.expense = expense;
+        this.date = date;
+        this.room = room;
+    }
 
     public Bill(int bId, String bill, String uname, float expense, String date) {
         this.bId = bId;
@@ -25,9 +35,9 @@ public class Bill {
         return "$" + getExpense();
     }
 
-    private float getExpense() {return expense;}
+    public float getExpense() {return expense;}
 
-    private String getDate() {return date;}
+    public String getDate() {return date;}
 
     public String getRowSmallText(){
         return "Date: " + getDate();

@@ -270,7 +270,7 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
 
     private String getImage(){
         ByteArrayOutputStream stream=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream);
         byte[] imageByteArray=stream.toByteArray();
         String img_str = Base64.encodeToString(imageByteArray, 0);
         return img_str;
