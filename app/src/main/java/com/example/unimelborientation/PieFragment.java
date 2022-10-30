@@ -6,24 +6,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.unimelborientation.util.HttpClient;
 import com.example.unimelborientation.util.SharedPreferencesUtils;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieEntry;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class PieFragment extends Fragment {
 //    float a,b,c,d,e;
 
     List<Float> list=new ArrayList<Float>();
-
+    private List<String> labels = new ArrayList<>();
     private PieChart pieChart;
     private Button cb;
     @Override
@@ -37,6 +47,7 @@ public class PieFragment extends Fragment {
             return view;
         }
         pieChart = (PieChart) view.findViewById(R.id.pie_chart);
+        initChartData();
         cb=(Button) view.findViewById(R.id.checkbill);
         cb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,25 +56,63 @@ public class PieFragment extends Fragment {
                 //获取数据库最新的账单的图片
             }
         });
-        initView();
+//        initView();
 
         return view;
     }
     private void initView() {
-
         showhodlePieChart();
     }
 
+    private void initChartData() {
+        RequestParams params = new RequestParams();
+        SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
+        params.put("uid",local_setting.getInt("uid"));
+        HttpClient.get("bill/searchPercentage",params,new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                showToast(responseString);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.get("code").equals("0")) {
+                        JSONArray bill = response.getJSONArray("data");
+                        for(int i =0;i<bill.length();i++){
+                            JSONObject item = bill.getJSONObject(i);
+                            float output = (float) item.getInt("percentage");
+                            labels.add(item.getString("uname"));
+                            list.add(output);
+                        }
+                        float[] m = new float[list.size()];
+                        showhodlePieChart();
+                    } else {
+                        System.out.println(response);
+                        showToast(response.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    public void showToast(String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     private void showhodlePieChart() {
-        list.add(1.0f);
-        list.add(4.0f);
-        list.add(3.0f);
-        list.add(7.0f);
-        list.add(3.0f);
         List<PieEntry> yvals = new ArrayList<>();
         for (int i=0;i<list.size();i++){
-            yvals.add(new PieEntry(list.get(i), "Tenent"+(i+1)));
+            yvals.add(new PieEntry(list.get(i), labels.get(i)));
         }
 
 
