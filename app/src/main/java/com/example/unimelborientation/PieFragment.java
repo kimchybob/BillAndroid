@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -32,7 +33,7 @@ import cz.msebera.android.httpclient.Header;
 public class PieFragment extends Fragment {
 //    float a,b,c,d,e;
 
-    List<Float> list=new ArrayList<Float>();
+    List<Integer> list=new ArrayList<Integer>();
     private List<String> labels = new ArrayList<>();
     private PieChart pieChart;
     private Button cb;
@@ -68,7 +69,7 @@ public class PieFragment extends Fragment {
         RequestParams params = new RequestParams();
         SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
         params.put("uid",local_setting.getInt("uid"));
-        HttpClient.get("bill/searchPercentage",params,new JsonHttpResponseHandler() {
+        HttpClient.get("bill/searchPieChartData",params,new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 showToast(responseString);
@@ -78,12 +79,12 @@ public class PieFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if (response.get("code").equals("0")) {
-                        JSONArray bill = response.getJSONArray("data");
-                        for(int i =0;i<bill.length();i++){
-                            JSONObject item = bill.getJSONObject(i);
-                            float output = (float) item.getInt("percentage");
-                            labels.add(item.getString("uname"));
-                            list.add(output);
+                        JSONObject bill = response.getJSONObject("data");
+                        Iterator<String> keys = bill.keys();
+                        while(keys.hasNext()){
+                            String name = keys.next();
+                            labels.add(name);
+                            list.add(bill.getInt(name));
                         }
                         float[] m = new float[list.size()];
                         showhodlePieChart();
