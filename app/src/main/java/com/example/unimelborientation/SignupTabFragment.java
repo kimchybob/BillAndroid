@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,10 +185,13 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
             params.put("sourceImage",getImage());
             showToast("Attempt to signup...");
             StringEntity entity = new StringEntity(params.toString());
+
+            Log.i("CSCS","准备传输");
             //todo signup api
             HttpClient.post("user/register", entity, new JsonHttpResponseHandler(){
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.i("CSCS","传输失败");
                     pb.setVisibility(View.GONE);
                     System.out.println(responseString);
                     showToast(responseString);
@@ -196,6 +200,7 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.i("CSCS","成功了传输");
                     pb.setVisibility(View.GONE);
                     String msg = null;
                     try {
@@ -219,8 +224,9 @@ public class SignupTabFragment extends Fragment implements View.OnClickListener{
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
+                            Log.i("CSCS","准备新的ACT");
                             startActivity(new Intent(getContext(), UniLoginActivity.class));
+                            Log.i("CSCS","GetAcT准备关闭");
                             getActivity().finish();
                         }else{
                             showToast(msg);

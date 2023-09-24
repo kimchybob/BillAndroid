@@ -54,8 +54,7 @@ import java.util.Map;
 import cz.msebera.android.httpclient.Header;
 
 public class ProfileFragme extends Fragment {
-    private TextView realname,username,emailtext,mobile;
-    private ImageView touxiang;
+    private TextView username,emailtext,mobile;
     private String email;
     private Uri imagePath;
 
@@ -69,31 +68,18 @@ public class ProfileFragme extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.profile1_fragment, container, false);
-        realname = (TextView) view.findViewById(R.id.realname);
+
         username=(TextView)view.findViewById(R.id.username1);
         emailtext = (TextView)view.findViewById(R.id.email);
         mobile=(TextView)view.findViewById(R.id.mobile);
-        touxiang=(ImageView) view.findViewById(R.id.touxiang);
-
         Intent intent = getActivity().getIntent();
         email = intent.getStringExtra("email");
         initProfileData();
-
-        touxiang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent photoIntent = new Intent(Intent.ACTION_PICK);
-                photoIntent.setType("image/*");
-                startActivityForResult(photoIntent,1);
-            }
-        });
-
         return view;
 
     }
 
     private void initProfileData() {
-        realname.setText("");
         RequestParams params = new RequestParams();
         SharedPreferencesUtils local_setting = new SharedPreferencesUtils(getContext(), "setting");
         params.put("uid",local_setting.getInt("uid"));
@@ -130,25 +116,6 @@ public class ProfileFragme extends Fragment {
             }
         });
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode ==1 &&resultCode ==RESULT_OK&&data!=null){
-            imagePath=data.getData();
-
-            getImageInImageView();
-        }
-    }
-    private void getImageInImageView() {
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        touxiang.setImageBitmap(bitmap);
     }
 
 

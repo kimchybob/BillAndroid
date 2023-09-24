@@ -30,9 +30,12 @@ public class Bill {
     }
 
 
+    public String getUname() {
+        return uname;
+    }
 
     public String getRowLargeText(){
-        return "$" + getExpense();
+        return "$" + getExpense() + " / " + getUname();
     }
 
     public float getExpense() {return expense;}
