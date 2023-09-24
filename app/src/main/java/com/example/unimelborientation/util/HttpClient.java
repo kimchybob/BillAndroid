@@ -7,7 +7,7 @@ import com.loopj.android.http.*;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class HttpClient {
-    private static final String BASE_URL = "http://192.168.0.253:8081/";
+    private static final String BASE_URL = "http://47.96.180.68:8081/";
 
 //            "http://10.0.2.2:8082/"; //Todo
 
